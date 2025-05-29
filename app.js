@@ -11,117 +11,79 @@ const DefectForm = {
                 <h1 class="form-title">Форма регистрации дефектов</h1>
                 
                 <form @submit.prevent="submitForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="objectName">Наименование объекта *</label>
-                            <input 
-                                type="text" 
-                                id="objectName"
-                                v-model="formData.objectName"
-                                class="form-input"
-                                required
-                            >
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="defectType">Тип дефекта *</label>
-                            <input 
-                                type="text" 
-                                id="defectType"
-                                v-model="formData.defectType"
-                                class="form-input"
-                                required
-                            >
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="location">Местоположение *</label>
-                            <input 
-                                type="text" 
-                                id="location"
-                                v-model="formData.location"
-                                class="form-input"
-                                required
-                            >
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="detectionDate">Дата обнаружения *</label>
-                            <input 
-                                type="date" 
-                                id="detectionDate"
-                                v-model="formData.detectionDate"
-                                class="form-input"
-                                required
-                            >
-                        </div>
-                    </div>
-                    
                     <div class="form-group">
-                        <label class="form-label" for="defectCause">Причины дефектов *</label>
+                        <label class="form-label" for="foundationType">Тип фундамента (тзк) *</label>
                         <select 
-                            id="defectCause"
-                            v-model="formData.defectCause"
+                            id="foundationType"
+                            v-model="formData.foundationType"
                             class="form-select"
                             required
                         >
-                            <option value="">Выберите причину дефекта</option>
-                            <option v-for="cause in defectCauses" :key="cause" :value="cause">
-                                {{ cause }}
+                            <option value="">Выберите тип фундамента</option>
+                            <option v-for="type in foundationTypes" :key="type" :value="type">
+                                {{ type }}
                             </option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="description">Описание дефекта *</label>
-                        <textarea 
-                            id="description"
-                            v-model="formData.description"
-                            class="form-textarea"
-                            placeholder="Подробное описание обнаруженного дефекта..."
+                        <label class="form-label" for="wallType">Тип стен (тзк) *</label>
+                        <select 
+                            id="wallType"
+                            v-model="formData.wallType"
+                            class="form-select"
                             required
-                        ></textarea>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="severity">Степень серьезности *</label>
-                            <select 
-                                id="severity"
-                                v-model="formData.severity"
-                                class="form-select"
-                                required
-                            >
-                                <option value="">Выберите степень</option>
-                                <option value="Низкая">Низкая</option>
-                                <option value="Средняя">Средняя</option>
-                                <option value="Высокая">Высокая</option>
-                                <option value="Критическая">Критическая</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="inspector">ФИО инспектора *</label>
-                            <input 
-                                type="text" 
-                                id="inspector"
-                                v-model="formData.inspector"
-                                class="form-input"
-                                required
-                            >
-                        </div>
+                        >
+                            <option value="">Выберите тип стен</option>
+                            <option v-for="type in wallTypes" :key="type" :value="type">
+                                {{ type }}
+                            </option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="recommendations">Рекомендации по устранению</label>
-                        <textarea 
-                            id="recommendations"
-                            v-model="formData.recommendations"
-                            class="form-textarea"
-                            placeholder="Рекомендации по устранению дефекта..."
-                        ></textarea>
+                        <label class="form-label" for="columnType">Тип колонн (тзк) *</label>
+                        <select 
+                            id="columnType"
+                            v-model="formData.columnType"
+                            class="form-select"
+                            required
+                        >
+                            <option value="">Выберите тип колонн</option>
+                            <option v-for="type in columnTypes" :key="type" :value="type">
+                                {{ type }}
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="floorType">Тип перекрытий (тзк) *</label>
+                        <select 
+                            id="floorType"
+                            v-model="formData.floorType"
+                            class="form-select"
+                            required
+                        >
+                            <option value="">Выберите тип перекрытий</option>
+                            <option v-for="type in floorTypes" :key="type" :value="type">
+                                {{ type }}
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="roofType">Тип крыши/покрытий *</label>
+                        <select 
+                            id="roofType"
+                            v-model="formData.roofType"
+                            class="form-select"
+                            required
+                        >
+                            <option value="">Выберите тип крыши/покрытий</option>
+                            <option v-for="type in roofTypes" :key="type" :value="type">
+                                {{ type }}
+                            </option>
+                        </select>
                     </div>
                     
                     <div class="checkbox-container">
@@ -156,29 +118,57 @@ const DefectForm = {
     data() {
         return {
             formData: {
-                objectName: '',
-                defectType: '',
-                location: '',
-                detectionDate: '',
-                defectCause: '',
-                description: '',
-                severity: '',
-                inspector: '',
-                recommendations: ''
+                foundationType: '',
+                wallType: '',
+                columnType: '',
+                floorType: '',
+                roofType: ''
             },
             
-            defectCauses: [
-                'Высокие эксплуатационные расходы',
-                'Необходимое воздействие CMP',
-                'Нагрузка температуры/длительного режима',
-                'Нагрузки при CMP',
-                'Нагрузка основа в процессе эксплуатации',
-                'Нагрузка CMP при орт',
-                'Нагрузка фундамента/грунта в процессе эксплуатации',
-                'Отсутствие однородности',
-                'Прочность кровельного покрытия',
-                'Прочность инженерных коммуникаций, отсутствие вертикальной гидроизоляции',
-                'Прочность инженерных систем'
+            foundationTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Ленточный бутовый',
+                'Ленточные из блоков ФБС',
+                'Фундаменты столбчатые стаканного типа',
+                'Плитный',
+                'Монолитная ж/б плита'
+            ],
+            
+            wallTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Крупные железобетонные блоки',
+                'Железобетонные панели',
+                'Силикатный кирпич',
+                'Керамический кирпич',
+                'Деревянные каркасно-щитовые',
+                'Деревянные рубленые брусчатые и бревенчатые'
+            ],
+            
+            columnTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Силикатный кирпич',
+                'Керамический кирпич',
+                'Сборные'
+            ],
+            
+            floorTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Деревянные',
+                'Сборные железобетонные типа ПК',
+                'Сборные железобетонные настильные',
+                'Монолитные'
+            ],
+            
+            roofTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Совмещенная железобетонная',
+                'Чердачная',
+                'Деревянная стропильная'
             ],
             
             isVerified: false,
@@ -228,15 +218,11 @@ const DefectForm = {
         
         resetForm() {
             this.formData = {
-                objectName: '',
-                defectType: '',
-                location: '',
-                detectionDate: '',
-                defectCause: '',
-                description: '',
-                severity: '',
-                inspector: '',
-                recommendations: ''
+                foundationType: '',
+                wallType: '',
+                columnType: '',
+                floorType: '',
+                roofType: ''
             };
             this.isVerified = false;
         }
