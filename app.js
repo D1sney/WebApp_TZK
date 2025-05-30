@@ -57,33 +57,39 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="floorType">Тип перекрытий (тзк) *</label>
-                        <select 
-                            id="floorType"
-                            v-model="formData.floorType"
-                            class="form-select"
-                            required
-                        >
-                            <option value="">Выберите тип перекрытий</option>
-                            <option v-for="type in floorTypes" :key="type" :value="type">
-                                {{ type }}
-                            </option>
-                        </select>
+                        <label class="form-label">Тип перекрытий (тзк) *</label>
+                        <div class="checkbox-list">
+                            <div v-for="type in floorTypes" :key="type" class="checkbox-item">
+                                <input 
+                                    type="checkbox" 
+                                    :id="'floor-' + type"
+                                    :value="type"
+                                    v-model="formData.floorType"
+                                    class="checkbox-input-small"
+                                >
+                                <label :for="'floor-' + type" class="checkbox-item-label">
+                                    {{ type }}
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="roofType">Тип крыши/покрытий *</label>
-                        <select 
-                            id="roofType"
-                            v-model="formData.roofType"
-                            class="form-select"
-                            required
-                        >
-                            <option value="">Выберите тип крыши/покрытий</option>
-                            <option v-for="type in roofTypes" :key="type" :value="type">
-                                {{ type }}
-                            </option>
-                        </select>
+                        <label class="form-label">Тип крыши/покрытий *</label>
+                        <div class="checkbox-list">
+                            <div v-for="type in roofTypes" :key="type" class="checkbox-item">
+                                <input 
+                                    type="checkbox" 
+                                    :id="'roof-' + type"
+                                    :value="type"
+                                    v-model="formData.roofType"
+                                    class="checkbox-input-small"
+                                >
+                                <label :for="'roof-' + type" class="checkbox-item-label">
+                                    {{ type }}
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="checkbox-container">
@@ -121,8 +127,8 @@ const DefectForm = {
                 foundationType: '',
                 wallType: '',
                 columnType: '',
-                floorType: '',
-                roofType: ''
+                floorType: [],
+                roofType: []
             },
             
             foundationTypes: [
@@ -221,8 +227,8 @@ const DefectForm = {
                 foundationType: '',
                 wallType: '',
                 columnType: '',
-                floorType: '',
-                roofType: ''
+                floorType: [],
+                roofType: []
             };
             this.isVerified = false;
         }
