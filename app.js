@@ -58,18 +58,32 @@ const DefectForm = {
                     
                     <div class="form-group">
                         <label class="form-label">Тип перекрытий (тзк) *</label>
-                        <div class="checkbox-list">
-                            <div v-for="type in floorTypes" :key="type" class="checkbox-item">
-                                <input 
-                                    type="checkbox" 
-                                    :id="'floor-' + type"
-                                    :value="type"
-                                    v-model="formData.floorType"
-                                    class="checkbox-input-small"
-                                >
-                                <label :for="'floor-' + type" class="checkbox-item-label">
-                                    {{ type }}
-                                </label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleFloorDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.floorType.length === 0" class="placeholder">
+                                        Выберите тип перекрытий
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.floorType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isFloorDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isFloorDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in floorTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'floor-dropdown-' + type"
+                                        :value="type"
+                                        v-model="formData.floorType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'floor-dropdown-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,6 +179,7 @@ const DefectForm = {
             },
             
             photosPreviews: [],
+            isFloorDropdownOpen: false,
             
             foundationTypes: [
                 'Нет подходящего описания',
@@ -218,7 +233,24 @@ const DefectForm = {
         }
     },
     
+    mounted() {
+        // Закрытие dropdown при клике вне его
+        document.addEventListener('click', this.closeFloorDropdown);
+    },
+    
+    beforeUnmount() {
+        document.removeEventListener('click', this.closeFloorDropdown);
+    },
+    
     methods: {
+        toggleFloorDropdown() {
+            this.isFloorDropdownOpen = !this.isFloorDropdownOpen;
+        },
+        
+        closeFloorDropdown() {
+            this.isFloorDropdownOpen = false;
+        },
+        
         handleFileUpload(event) {
             const files = event.target.files;
             const newFiles = Array.from(files);
@@ -317,6 +349,7 @@ const DefectForm = {
             };
             this.photosPreviews = [];
             this.isVerified = false;
+            this.isFloorDropdownOpen = false;
             
             // Очищаем input файлов
             const fileInput = document.getElementById('photos');

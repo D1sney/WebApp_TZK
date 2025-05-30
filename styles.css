@@ -93,6 +93,109 @@ body {
     gap: 20px;
 }
 
+.custom-select-container {
+    position: relative;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgb(183, 193, 192);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    min-height: 50px;
+}
+
+.custom-select:hover {
+    border-color: rgb(2, 177, 192);
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: rgb(2, 177, 192);
+    box-shadow: 0 0 0 3px rgba(2, 177, 192, 0.1);
+}
+
+.select-display {
+    flex: 1;
+    overflow: hidden;
+}
+
+.placeholder {
+    color: #999;
+    font-size: 16px;
+}
+
+.selected-values {
+    color: rgb(68, 73, 98);
+    font-size: 16px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.select-arrow {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+    color: rgb(68, 73, 98);
+    font-size: 12px;
+}
+
+.select-arrow.open {
+    transform: rotate(180deg);
+}
+
+.custom-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid rgb(183, 193, 192);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(183, 193, 192, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(183, 193, 192, 0.1);
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-checkbox {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    accent-color: rgb(2, 177, 192);
+    cursor: pointer;
+}
+
+.dropdown-label {
+    color: rgb(68, 73, 98);
+    font-size: 14px;
+    cursor: pointer;
+    flex: 1;
+    line-height: 1.4;
+}
+
 .checkbox-list {
     border: 2px solid rgb(183, 193, 192);
     border-radius: 8px;
@@ -358,5 +461,9 @@ body {
     
     .file-upload-button {
         padding: 20px 15px;
+    }
+    
+    .selected-values {
+        font-size: 14px;
     }
 } 
