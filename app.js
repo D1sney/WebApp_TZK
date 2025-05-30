@@ -92,6 +92,38 @@ const DefectForm = {
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <label class="form-label">Прикрепить фото</label>
+                        <div class="file-upload-container">
+                            <input 
+                                type="file" 
+                                id="photos"
+                                @change="handleFileUpload"
+                                multiple
+                                accept="image/*"
+                                class="file-input"
+                            >
+                            <label for="photos" class="file-upload-button">
+                                <span class="upload-icon">📷</span>
+                                <span class="upload-text">Выберите фотографии</span>
+                                <span class="upload-hint">или перетащите файлы сюда</span>
+                            </label>
+                        </div>
+                        
+                        <div v-if="formData.photos.length > 0" class="photo-preview-container">
+                            <div class="photo-count">Выбрано фотографий: {{ formData.photos.length }}</div>
+                            <div class="photo-grid">
+                                <div v-for="(photo, index) in photosPreviews" :key="index" class="photo-preview">
+                                    <img :src="photo.url" :alt="photo.name" class="preview-image">
+                                    <div class="photo-info">
+                                        <div class="photo-name">{{ photo.name }}</div>
+                                        <button type="button" @click="removePhoto(index)" class="remove-photo-btn">✕</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="checkbox-container">
                         <input 
                             type="checkbox" 
@@ -128,8 +160,11 @@ const DefectForm = {
                 wallType: '',
                 columnType: '',
                 floorType: [],
-                roofType: []
+                roofType: [],
+                photos: []
             },
+            
+            photosPreviews: [],
             
             foundationTypes: [
                 'Нет подходящего описания',
@@ -184,22 +219,71 @@ const DefectForm = {
     },
     
     methods: {
+        handleFileUpload(event) {
+            const files = event.target.files;
+            const newFiles = Array.from(files);
+            
+            // Добавляем новые файлы к существующим
+            this.formData.photos = [...this.formData.photos, ...newFiles];
+            
+            // Создаем превью для новых файлов
+            this.createPhotoPreviews();
+            
+            // Очищаем input, чтобы можно было выбрать те же файлы повторно
+            event.target.value = '';
+        },
+        
+        createPhotoPreviews() {
+            // Очищаем старые превью
+            this.photosPreviews = [];
+            
+            // Создаем превью для всех фотографий заново
+            this.formData.photos.forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.photosPreviews[index] = {
+                            url: e.target.result,
+                            name: file.name,
+                            size: file.size
+                        };
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        },
+        
+        removePhoto(index) {
+            this.formData.photos.splice(index, 1);
+            // Пересоздаем превью после удаления
+            this.createPhotoPreviews();
+        },
+        
         async submitForm() {
             if (!this.isVerified) {
                 return;
             }
             
             try {
+                const formDataToSend = new FormData();
+                
+                // Добавляем обычные поля
+                formDataToSend.append('foundationType', this.formData.foundationType);
+                formDataToSend.append('wallType', this.formData.wallType);
+                formDataToSend.append('columnType', this.formData.columnType);
+                formDataToSend.append('floorType', JSON.stringify(this.formData.floorType));
+                formDataToSend.append('roofType', JSON.stringify(this.formData.roofType));
+                formDataToSend.append('submittedAt', new Date().toISOString());
+                
+                // Добавляем фотографии
+                this.formData.photos.forEach((photo, index) => {
+                    formDataToSend.append(`photo_${index}`, photo);
+                });
+                
                 // Здесь укажите ваш HTTPS адрес для отправки данных
                 const response = await fetch('https://your-api-endpoint.com/defects', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...this.formData,
-                        submittedAt: new Date().toISOString()
-                    })
+                    body: formDataToSend
                 });
                 
                 if (response.ok) {
@@ -228,9 +312,17 @@ const DefectForm = {
                 wallType: '',
                 columnType: '',
                 floorType: [],
-                roofType: []
+                roofType: [],
+                photos: []
             };
+            this.photosPreviews = [];
             this.isVerified = false;
+            
+            // Очищаем input файлов
+            const fileInput = document.getElementById('photos');
+            if (fileInput) {
+                fileInput.value = '';
+            }
         }
     }
 };
