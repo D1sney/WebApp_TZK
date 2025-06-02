@@ -395,4 +395,34 @@ body {
         order: 3;
         padding-bottom: 20px;
     }
+}
+
+.info-block {
+    background: rgba(183, 193, 192, 0.15);
+    border-radius: 8px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    color: rgb(68, 73, 98);
+    font-size: 18px;
+    display: flex;
+    gap: 40px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.edit-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 2px solid rgb(183, 193, 192);
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+    color: rgb(68, 73, 98);
+    transition: all 0.3s ease;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-color: rgb(2, 177, 192);
+    box-shadow: 0 0 0 2px rgba(2, 177, 192, 0.1);
 } 
