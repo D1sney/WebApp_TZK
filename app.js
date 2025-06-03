@@ -552,17 +552,6 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="rafterSystemCharacteristics">Геометрические характеристики стропильной системы</label>
-                        <input 
-                            type="text" 
-                            id="rafterSystemCharacteristics"
-                            v-model="formData.rafterSystemCharacteristics"
-                            class="form-input"
-                            placeholder="Укажите геометрические характеристики стропильной системы"
-                        >
-                    </div>
-                    
-                    <div class="form-group">
                         <label class="form-label" for="frontonRidgeHeight">Высота конька фронтона (мм)</label>
                         <input 
                             type="text" 
@@ -664,17 +653,6 @@ const DefectForm = {
                     <!-- МОП -->
                     <div class="subsection-header">
                         <h3 class="subsection-title">МОП</h3>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="mop">МОП</label>
-                        <input 
-                            type="text" 
-                            id="mop"
-                            v-model="formData.mop"
-                            class="form-input"
-                            placeholder="Укажите МОП"
-                        >
                     </div>
                     
                     <!-- Лестницы -->
@@ -872,17 +850,6 @@ const DefectForm = {
                     <!-- Окна и двери -->
                     <div class="subsection-header">
                         <h3 class="subsection-title">Окна и двери</h3>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="windowsDoors">Окна и двери</label>
-                        <input 
-                            type="text" 
-                            id="windowsDoors"
-                            v-model="formData.windowsDoors"
-                            class="form-input"
-                            placeholder="Укажите характеристики окон и дверей"
-                        >
                     </div>
                     
                     <!-- Центральное отопление -->
@@ -2001,7 +1968,6 @@ const DefectForm = {
                 roofSlabThickness: '',
                 
                 // Стропильная система
-                rafterSystemCharacteristics: '',
                 frontonRidgeHeight: '',
                 mainRidgeHeight: '',
                 rafterLegs: '',
@@ -2011,9 +1977,6 @@ const DefectForm = {
                 brace: '',
                 layingBeam: '',
                 mauerlat: '',
-                
-                // МОП
-                mop: '',
                 
                 // Лестницы
                 stairType: [],
@@ -2030,9 +1993,6 @@ const DefectForm = {
                 // Входные группы
                 entranceType: [],
                 entranceCharacteristics: '',
-                
-                // Окна и двери
-                windowsDoors: '',
                 
                 // Центральное отопление
                 heatingType: [],
@@ -2743,9 +2703,6 @@ const DefectForm = {
                 formDataToSend.append('roofingStructure', JSON.stringify(this.formData.roofingStructure));
                 formDataToSend.append('prefabRoofType', JSON.stringify(this.formData.prefabRoofType));
                 formDataToSend.append('roofSlabThickness', this.formData.roofSlabThickness);
-                formDataToSend.append('rafterSystemCharacteristics', this.formData.rafterSystemCharacteristics);
-                formDataToSend.append('frontonRidgeHeight', this.formData.frontonRidgeHeight);
-                formDataToSend.append('mainRidgeHeight', this.formData.mainRidgeHeight);
                 formDataToSend.append('rafterLegs', this.formData.rafterLegs);
                 formDataToSend.append('sheathing', this.formData.sheathing);
                 formDataToSend.append('strut', this.formData.strut);
@@ -2753,7 +2710,6 @@ const DefectForm = {
                 formDataToSend.append('brace', this.formData.brace);
                 formDataToSend.append('layingBeam', this.formData.layingBeam);
                 formDataToSend.append('mauerlat', this.formData.mauerlat);
-                formDataToSend.append('mop', this.formData.mop);
                 formDataToSend.append('stairType', JSON.stringify(this.formData.stairType));
                 formDataToSend.append('stringerType', this.formData.stringerType);
                 formDataToSend.append('balconyType', JSON.stringify(this.formData.balconyType));
@@ -2762,7 +2718,6 @@ const DefectForm = {
                 formDataToSend.append('loggiaCharacteristics', this.formData.loggiaCharacteristics);
                 formDataToSend.append('entranceType', JSON.stringify(this.formData.entranceType));
                 formDataToSend.append('entranceCharacteristics', this.formData.entranceCharacteristics);
-                formDataToSend.append('windowsDoors', this.formData.windowsDoors);
                 formDataToSend.append('heatingType', JSON.stringify(this.formData.heatingType));
                 formDataToSend.append('heatingConnectionType', JSON.stringify(this.formData.heatingConnectionType));
                 formDataToSend.append('heatingDistribution', JSON.stringify(this.formData.heatingDistribution));
@@ -2869,7 +2824,6 @@ const DefectForm = {
                 roofSlabThickness: '',
                 
                 // Стропильная система
-                rafterSystemCharacteristics: '',
                 frontonRidgeHeight: '',
                 mainRidgeHeight: '',
                 rafterLegs: '',
@@ -2879,9 +2833,6 @@ const DefectForm = {
                 brace: '',
                 layingBeam: '',
                 mauerlat: '',
-                
-                // МОП
-                mop: '',
                 
                 // Лестницы
                 stairType: [],
@@ -2898,9 +2849,6 @@ const DefectForm = {
                 // Входные группы
                 entranceType: [],
                 entranceCharacteristics: '',
-                
-                // Окна и двери
-                windowsDoors: '',
                 
                 // Центральное отопление
                 heatingType: [],
