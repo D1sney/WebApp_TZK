@@ -12,75 +12,30 @@ const DefectForm = {
                 
                 <form @submit.prevent="submitForm">
                     <div class="form-group">
-                        <label class="form-label" for="foundationType">Тип фундамента (тзк) *</label>
-                        <select 
-                            id="foundationType"
-                            v-model="formData.foundationType"
-                            class="form-select"
-                            required
-                        >
-                            <option value="">Выберите тип фундамента</option>
-                            <option v-for="type in foundationTypes" :key="type" :value="type">
-                                {{ type }}
-                            </option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="wallType">Тип стен (тзк) *</label>
-                        <select 
-                            id="wallType"
-                            v-model="formData.wallType"
-                            class="form-select"
-                            required
-                        >
-                            <option value="">Выберите тип стен</option>
-                            <option v-for="type in wallTypes" :key="type" :value="type">
-                                {{ type }}
-                            </option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="columnType">Тип колонн (тзк) *</label>
-                        <select 
-                            id="columnType"
-                            v-model="formData.columnType"
-                            class="form-select"
-                            required
-                        >
-                            <option value="">Выберите тип колонн</option>
-                            <option v-for="type in columnTypes" :key="type" :value="type">
-                                {{ type }}
-                            </option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Тип перекрытий (тзк) *</label>
+                        <label class="form-label">Тип фундамента (тзк) *</label>
                         <div class="custom-select-container" @click.stop>
-                            <div class="custom-select" @click="toggleFloorDropdown">
+                            <div class="custom-select" @click="toggleFoundationDropdown">
                                 <div class="select-display">
-                                    <span v-if="formData.floorType.length === 0" class="placeholder">
-                                        Выберите тип перекрытий
+                                    <span v-if="formData.foundationType.length === 0" class="placeholder">
+                                        Выберите тип фундамента
                                     </span>
                                     <span v-else class="selected-values">
-                                        {{ formData.floorType.join(', ') }}
+                                        {{ formData.foundationType.join(', ') }}
                                     </span>
                                 </div>
-                                <div class="select-arrow" :class="{ 'open': isFloorDropdownOpen }">▼</div>
+                                <div class="select-arrow" :class="{ 'open': isFoundationDropdownOpen }">▼</div>
                             </div>
                             
-                            <div v-if="isFloorDropdownOpen" class="custom-dropdown">
-                                <div v-for="type in floorTypes" :key="type" class="dropdown-item">
+                            <div v-if="isFoundationDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in foundationTypes" :key="type" class="dropdown-item">
                                     <input 
                                         type="checkbox" 
-                                        :id="'floor-dropdown-' + type"
+                                        :id="'foundation-' + type"
                                         :value="type"
-                                        v-model="formData.floorType"
+                                        v-model="formData.foundationType"
                                         class="dropdown-checkbox"
                                     >
-                                    <label :for="'floor-dropdown-' + type" class="dropdown-label">
+                                    <label :for="'foundation-' + type" class="dropdown-label">
                                         {{ type }}
                                     </label>
                                 </div>
@@ -89,19 +44,129 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Тип крыши/покрытий *</label>
-                        <div class="checkbox-list">
-                            <div v-for="type in roofTypes" :key="type" class="checkbox-item">
-                                <input 
-                                    type="checkbox" 
-                                    :id="'roof-' + type"
-                                    :value="type"
-                                    v-model="formData.roofType"
-                                    class="checkbox-input-small"
-                                >
-                                <label :for="'roof-' + type" class="checkbox-item-label">
-                                    {{ type }}
-                                </label>
+                        <label class="form-label">Тип стен (тзк) *</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleWallDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.wallType.length === 0" class="placeholder">
+                                        Выберите тип стен
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.wallType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isWallDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isWallDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in wallTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'wall-' + type"
+                                        :value="type"
+                                        v-model="formData.wallType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'wall-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Материал стен наружных *</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleExternalWallMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.externalWallMaterial.length === 0" class="placeholder">
+                                        Выберите материал стен наружных
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.externalWallMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isExternalWallMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isExternalWallMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in externalWallMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'external-wall-' + type"
+                                        :value="type"
+                                        v-model="formData.externalWallMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'external-wall-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Материал стен внутренних *</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleInternalWallMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.internalWallMaterial.length === 0" class="placeholder">
+                                        Выберите материал стен внутренних
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.internalWallMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isInternalWallMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isInternalWallMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in internalWallMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'internal-wall-' + type"
+                                        :value="type"
+                                        v-model="formData.internalWallMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'internal-wall-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Материал перегородок *</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="togglePartitionMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.partitionMaterial.length === 0" class="placeholder">
+                                        Выберите материал перегородок
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.partitionMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isPartitionMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isPartitionMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in partitionMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'partition-' + type"
+                                        :value="type"
+                                        v-model="formData.partitionMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'partition-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,16 +235,20 @@ const DefectForm = {
     data() {
         return {
             formData: {
-                foundationType: '',
-                wallType: '',
-                columnType: '',
-                floorType: [],
-                roofType: [],
+                foundationType: [],
+                wallType: [],
+                externalWallMaterial: [],
+                internalWallMaterial: [],
+                partitionMaterial: [],
                 photos: []
             },
             
             photosPreviews: [],
-            isFloorDropdownOpen: false,
+            isFoundationDropdownOpen: false,
+            isWallDropdownOpen: false,
+            isExternalWallMaterialDropdownOpen: false,
+            isInternalWallMaterialDropdownOpen: false,
+            isPartitionMaterialDropdownOpen: false,
             
             foundationTypes: [
                 'Нет подходящего описания',
@@ -202,29 +271,36 @@ const DefectForm = {
                 'Деревянные рубленые брусчатые и бревенчатые'
             ],
             
-            columnTypes: [
-                'Нет подходящего описания',
-                'Отсутствует',
+            externalWallMaterialTypes: [
+                'Силикатобетонные блоки',
+                'Шлакобетонные блоки',
+                'Силикатобетонные панели',
+                'Шлакобетонные панели',
+                'Железобетонные панели',
                 'Силикатный кирпич',
                 'Керамический кирпич',
-                'Сборные'
+                'Деревянные каркасно-щитовые',
+                'Деревянные рубленые брусчатые',
+                'Деревянные рубленые бревенчатые'
             ],
             
-            floorTypes: [
-                'Нет подходящего описания',
-                'Отсутствует',
-                'Деревянные',
-                'Сборные железобетонные типа ПК',
-                'Сборные железобетонные настильные',
-                'Монолитные'
+            internalWallMaterialTypes: [
+                'Силикатобетонные блоки',
+                'Шлакобетонные блоки',
+                'Керамический кирпич',
+                'Силикатобетонные панели',
+                'Шлакобетонные панели',
+                'Железобетонные панели',
+                'Силикатный кирпич',
+                'Деревянные'
             ],
             
-            roofTypes: [
-                'Нет подходящего описания',
-                'Отсутствует',
-                'Совмещенная железобетонная',
-                'Чердачная',
-                'Деревянная стропильная'
+            partitionMaterialTypes: [
+                'силикатного кирпича на цементно-песчаном растворе',
+                'керамического кирпича на цементно-песчаном растворе',
+                'гипсолитовых блоков',
+                'гипсокартонные по металлическому профилю',
+                'панельные оштукатуренные'
             ],
             
             isVerified: false,
@@ -234,42 +310,67 @@ const DefectForm = {
     },
     
     mounted() {
-        // Закрытие dropdown при клике вне его
-        document.addEventListener('click', this.closeFloorDropdown);
+        document.addEventListener('click', this.closeAllDropdowns);
     },
     
     beforeUnmount() {
-        document.removeEventListener('click', this.closeFloorDropdown);
+        document.removeEventListener('click', this.closeAllDropdowns);
     },
     
     methods: {
-        toggleFloorDropdown() {
-            this.isFloorDropdownOpen = !this.isFloorDropdownOpen;
+        toggleFoundationDropdown() {
+            this.isFoundationDropdownOpen = !this.isFoundationDropdownOpen;
+            this.closeOtherDropdowns('foundation');
         },
         
-        closeFloorDropdown() {
-            this.isFloorDropdownOpen = false;
+        toggleWallDropdown() {
+            this.isWallDropdownOpen = !this.isWallDropdownOpen;
+            this.closeOtherDropdowns('wall');
+        },
+        
+        toggleExternalWallMaterialDropdown() {
+            this.isExternalWallMaterialDropdownOpen = !this.isExternalWallMaterialDropdownOpen;
+            this.closeOtherDropdowns('externalWallMaterial');
+        },
+        
+        toggleInternalWallMaterialDropdown() {
+            this.isInternalWallMaterialDropdownOpen = !this.isInternalWallMaterialDropdownOpen;
+            this.closeOtherDropdowns('internalWallMaterial');
+        },
+        
+        togglePartitionMaterialDropdown() {
+            this.isPartitionMaterialDropdownOpen = !this.isPartitionMaterialDropdownOpen;
+            this.closeOtherDropdowns('partitionMaterial');
+        },
+        
+        closeOtherDropdowns(except) {
+            if (except !== 'foundation') this.isFoundationDropdownOpen = false;
+            if (except !== 'wall') this.isWallDropdownOpen = false;
+            if (except !== 'externalWallMaterial') this.isExternalWallMaterialDropdownOpen = false;
+            if (except !== 'internalWallMaterial') this.isInternalWallMaterialDropdownOpen = false;
+            if (except !== 'partitionMaterial') this.isPartitionMaterialDropdownOpen = false;
+        },
+        
+        closeAllDropdowns() {
+            this.isFoundationDropdownOpen = false;
+            this.isWallDropdownOpen = false;
+            this.isExternalWallMaterialDropdownOpen = false;
+            this.isInternalWallMaterialDropdownOpen = false;
+            this.isPartitionMaterialDropdownOpen = false;
         },
         
         handleFileUpload(event) {
             const files = event.target.files;
             const newFiles = Array.from(files);
             
-            // Добавляем новые файлы к существующим
             this.formData.photos = [...this.formData.photos, ...newFiles];
-            
-            // Создаем превью для новых файлов
             this.createPhotoPreviews();
-            
-            // Очищаем input, чтобы можно было выбрать те же файлы повторно
             event.target.value = '';
         },
         
         createPhotoPreviews() {
-            // Очищаем старые превью
             this.photosPreviews = [];
             
-            // Создаем превью для всех фотографий заново
             this.formData.photos.forEach((file, index) => {
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
@@ -287,7 +388,6 @@ const DefectForm = {
         
         removePhoto(index) {
             this.formData.photos.splice(index, 1);
-            // Пересоздаем превью после удаления
             this.createPhotoPreviews();
         },
         
@@ -299,20 +399,17 @@ const DefectForm = {
             try {
                 const formDataToSend = new FormData();
                 
-                // Добавляем обычные поля
-                formDataToSend.append('foundationType', this.formData.foundationType);
-                formDataToSend.append('wallType', this.formData.wallType);
-                formDataToSend.append('columnType', this.formData.columnType);
-                formDataToSend.append('floorType', JSON.stringify(this.formData.floorType));
-                formDataToSend.append('roofType', JSON.stringify(this.formData.roofType));
+                formDataToSend.append('foundationType', JSON.stringify(this.formData.foundationType));
+                formDataToSend.append('wallType', JSON.stringify(this.formData.wallType));
+                formDataToSend.append('externalWallMaterial', JSON.stringify(this.formData.externalWallMaterial));
+                formDataToSend.append('internalWallMaterial', JSON.stringify(this.formData.internalWallMaterial));
+                formDataToSend.append('partitionMaterial', JSON.stringify(this.formData.partitionMaterial));
                 formDataToSend.append('submittedAt', new Date().toISOString());
                 
-                // Добавляем фотографии
                 this.formData.photos.forEach((photo, index) => {
                     formDataToSend.append(`photo_${index}`, photo);
                 });
                 
-                // Здесь укажите ваш HTTPS адрес для отправки данных
                 const response = await fetch('https://your-api-endpoint.com/defects', {
                     method: 'POST',
                     body: formDataToSend
@@ -331,7 +428,6 @@ const DefectForm = {
                 this.submitMessageClass = 'error-message';
             }
             
-            // Скрыть сообщение через 5 секунд
             setTimeout(() => {
                 this.submitMessage = '';
                 this.submitMessageClass = '';
@@ -340,18 +436,17 @@ const DefectForm = {
         
         resetForm() {
             this.formData = {
-                foundationType: '',
-                wallType: '',
-                columnType: '',
-                floorType: [],
-                roofType: [],
+                foundationType: [],
+                wallType: [],
+                externalWallMaterial: [],
+                internalWallMaterial: [],
+                partitionMaterial: [],
                 photos: []
             };
             this.photosPreviews = [];
             this.isVerified = false;
-            this.isFloorDropdownOpen = false;
+            this.closeAllDropdowns();
             
-            // Очищаем input файлов
             const fileInput = document.getElementById('photos');
             if (fileInput) {
                 fileInput.value = '';
