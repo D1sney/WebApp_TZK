@@ -241,6 +241,97 @@ const DefectForm = {
                         >
                     </div>
                     
+                    <!-- Колонны -->
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">Колонны</h3>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Тип колонн (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColumnTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.columnType.length === 0" class="placeholder">
+                                        Выберите тип колонн
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.columnType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColumnTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColumnTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in columnTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'column-type-' + type"
+                                        :value="type"
+                                        v-model="formData.columnType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'column-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Материал (колонны)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColumnMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.columnMaterial.length === 0" class="placeholder">
+                                        Выберите материал колонн
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.columnMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColumnMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColumnMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in columnMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'column-material-' + type"
+                                        :value="type"
+                                        v-model="formData.columnMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'column-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="columnSection">Сечение (мм) (колонны)</label>
+                        <input 
+                            type="text" 
+                            id="columnSection"
+                            v-model="formData.columnSection"
+                            class="form-input"
+                            placeholder="Укажите сечение колонн в мм"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="columnMaterialStrength">Прочность материала колонн</label>
+                        <input 
+                            type="text" 
+                            id="columnMaterialStrength"
+                            v-model="formData.columnMaterialStrength"
+                            class="form-input"
+                            placeholder="Укажите прочность материала колонн"
+                        >
+                    </div>
+                    
                     <!-- Перекрытия -->
                     <div class="subsection-header">
                         <h3 class="subsection-title">Перекрытия</h3>
@@ -1890,6 +1981,12 @@ const DefectForm = {
                 partitionMaterial: [],
                 wallStrength: '',
                 
+                // Колонны
+                columnType: [],
+                columnMaterial: [],
+                columnSection: '',
+                columnMaterialStrength: '',
+                
                 // Перекрытия
                 floorType: [],
                 concreteFloorStrength: '',
@@ -2005,6 +2102,8 @@ const DefectForm = {
             isExternalWallMaterialDropdownOpen: false,
             isInternalWallMaterialDropdownOpen: false,
             isPartitionMaterialDropdownOpen: false,
+            isColumnTypeDropdownOpen: false,
+            isColumnMaterialDropdownOpen: false,
             isFloorTypeDropdownOpen: false,
             isRoofTypeDropdownOpen: false,
             isRoofStructureDropdownOpen: false,
@@ -2092,6 +2191,19 @@ const DefectForm = {
                 'панельные оштукатуренные'
             ],
             
+            columnTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Силикатный кирпич',
+                'Керамический кирпич',
+                'Сборные'
+            ],
+            
+            columnMaterialTypes: [
+                'Кирпич керамический',
+                'Железобетон'
+            ],
+            
             floorTypes: [
                 'Нет подходящего описания',
                 'Отсутствуют',
@@ -2129,7 +2241,7 @@ const DefectForm = {
                 'Отсутствуют',
                 'Пустотные типа ПК',
                 'Ребристые плиты покрытия',
-                'Настилы типа НГ'
+                'Панельные'
             ],
             
             stairTypes: [
@@ -2307,6 +2419,16 @@ const DefectForm = {
             this.closeOtherDropdowns('partitionMaterial');
         },
         
+        toggleColumnTypeDropdown() {
+            this.isColumnTypeDropdownOpen = !this.isColumnTypeDropdownOpen;
+            this.closeOtherDropdowns('columnType');
+        },
+        
+        toggleColumnMaterialDropdown() {
+            this.isColumnMaterialDropdownOpen = !this.isColumnMaterialDropdownOpen;
+            this.closeOtherDropdowns('columnMaterial');
+        },
+        
         toggleFloorTypeDropdown() {
             this.isFloorTypeDropdownOpen = !this.isFloorTypeDropdownOpen;
             this.closeOtherDropdowns('floorType');
@@ -2478,6 +2600,8 @@ const DefectForm = {
             if (except !== 'externalWallMaterial') this.isExternalWallMaterialDropdownOpen = false;
             if (except !== 'internalWallMaterial') this.isInternalWallMaterialDropdownOpen = false;
             if (except !== 'partitionMaterial') this.isPartitionMaterialDropdownOpen = false;
+            if (except !== 'columnType') this.isColumnTypeDropdownOpen = false;
+            if (except !== 'columnMaterial') this.isColumnMaterialDropdownOpen = false;
             if (except !== 'floorType') this.isFloorTypeDropdownOpen = false;
             if (except !== 'roofType') this.isRoofTypeDropdownOpen = false;
             if (except !== 'roofStructure') this.isRoofStructureDropdownOpen = false;
@@ -2519,6 +2643,8 @@ const DefectForm = {
             this.isExternalWallMaterialDropdownOpen = false;
             this.isInternalWallMaterialDropdownOpen = false;
             this.isPartitionMaterialDropdownOpen = false;
+            this.isColumnTypeDropdownOpen = false;
+            this.isColumnMaterialDropdownOpen = false;
             this.isFloorTypeDropdownOpen = false;
             this.isRoofTypeDropdownOpen = false;
             this.isRoofStructureDropdownOpen = false;
@@ -2604,6 +2730,10 @@ const DefectForm = {
                 formDataToSend.append('wallFinish', this.formData.wallFinish);
                 formDataToSend.append('partitionMaterial', JSON.stringify(this.formData.partitionMaterial));
                 formDataToSend.append('wallStrength', this.formData.wallStrength);
+                formDataToSend.append('columnType', JSON.stringify(this.formData.columnType));
+                formDataToSend.append('columnMaterial', JSON.stringify(this.formData.columnMaterial));
+                formDataToSend.append('columnSection', this.formData.columnSection);
+                formDataToSend.append('columnMaterialStrength', this.formData.columnMaterialStrength);
                 formDataToSend.append('floorType', JSON.stringify(this.formData.floorType));
                 formDataToSend.append('concreteFloorStrength', this.formData.concreteFloorStrength);
                 formDataToSend.append('floorThickness', this.formData.floorThickness);
@@ -2718,6 +2848,12 @@ const DefectForm = {
                 wallFinish: '',
                 partitionMaterial: [],
                 wallStrength: '',
+                
+                // Колонны
+                columnType: [],
+                columnMaterial: [],
+                columnSection: '',
+                columnMaterialStrength: '',
                 
                 // Перекрытия
                 floorType: [],
