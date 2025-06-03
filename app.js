@@ -247,14 +247,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="floorType">Тип перекрытий (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="floorType"
-                            v-model="formData.floorType"
-                            class="form-input"
-                            placeholder="Укажите тип перекрытий"
-                        >
+                        <label class="form-label">Тип перекрытий (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleFloorTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.floorType.length === 0" class="placeholder">
+                                        Выберите тип перекрытий
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.floorType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isFloorTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isFloorTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in floorTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'floor-' + type"
+                                        :value="type"
+                                        v-model="formData.floorType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'floor-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -296,47 +317,131 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="roofType">Тип крыши/покрытий</label>
-                        <input 
-                            type="text" 
-                            id="roofType"
-                            v-model="formData.roofType"
-                            class="form-input"
-                            placeholder="Укажите тип крыши/покрытий"
-                        >
+                        <label class="form-label">Тип крыши/покрытий</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleRoofTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.roofType.length === 0" class="placeholder">
+                                        Выберите тип крыши/покрытий
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.roofType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isRoofTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isRoofTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in roofTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'roof-' + type"
+                                        :value="type"
+                                        v-model="formData.roofType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'roof-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="roofStructure">Несущие конструкции</label>
-                        <input 
-                            type="text" 
-                            id="roofStructure"
-                            v-model="formData.roofStructure"
-                            class="form-input"
-                            placeholder="Укажите несущие конструкции"
-                        >
+                        <label class="form-label">Несущие конструкции</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleRoofStructureDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.roofStructure.length === 0" class="placeholder">
+                                        Выберите несущие конструкции
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.roofStructure.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isRoofStructureDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isRoofStructureDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in roofStructureTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'roof-structure-' + type"
+                                        :value="type"
+                                        v-model="formData.roofStructure"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'roof-structure-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="roofingStructure">Конструкции кровли</label>
-                        <input 
-                            type="text" 
-                            id="roofingStructure"
-                            v-model="formData.roofingStructure"
-                            class="form-input"
-                            placeholder="Укажите конструкции кровли"
-                        >
+                        <label class="form-label">Конструкции кровли</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleRoofingStructureDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.roofingStructure.length === 0" class="placeholder">
+                                        Выберите конструкции кровли
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.roofingStructure.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isRoofingStructureDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isRoofingStructureDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in roofingStructureTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'roofing-structure-' + type"
+                                        :value="type"
+                                        v-model="formData.roofingStructure"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'roofing-structure-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="prefabRoofType">Тип сборных железобетонных покрытий</label>
-                        <input 
-                            type="text" 
-                            id="prefabRoofType"
-                            v-model="formData.prefabRoofType"
-                            class="form-input"
-                            placeholder="Укажите тип сборных железобетонных покрытий"
-                        >
+                        <label class="form-label">Тип сборных железобетонных покрытий</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="togglePrefabRoofTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.prefabRoofType.length === 0" class="placeholder">
+                                        Выберите тип сборных железобетонных покрытий
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.prefabRoofType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isPrefabRoofTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isPrefabRoofTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in prefabRoofTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'prefab-roof-' + type"
+                                        :value="type"
+                                        v-model="formData.prefabRoofType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'prefab-roof-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -487,14 +592,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="stairType">Тип лестницы (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="stairType"
-                            v-model="formData.stairType"
-                            class="form-input"
-                            placeholder="Укажите тип лестницы"
-                        >
+                        <label class="form-label">Тип лестницы (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleStairTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.stairType.length === 0" class="placeholder">
+                                        Выберите тип лестницы
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.stairType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isStairTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isStairTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in stairTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'stair-' + type"
+                                        :value="type"
+                                        v-model="formData.stairType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'stair-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -514,14 +640,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="balconyType">Тип балконов (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="balconyType"
-                            v-model="formData.balconyType"
-                            class="form-input"
-                            placeholder="Укажите тип балконов"
-                        >
+                        <label class="form-label">Тип балконов (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleBalconyTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.balconyType.length === 0" class="placeholder">
+                                        Выберите тип балконов
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.balconyType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isBalconyTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isBalconyTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in balconyTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'balcony-' + type"
+                                        :value="type"
+                                        v-model="formData.balconyType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'balcony-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -541,14 +688,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="loggiaType">Тип лоджий (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="loggiaType"
-                            v-model="formData.loggiaType"
-                            class="form-input"
-                            placeholder="Укажите тип лоджий"
-                        >
+                        <label class="form-label">Тип лоджий (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleLoggiaTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.loggiaType.length === 0" class="placeholder">
+                                        Выберите тип лоджий
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.loggiaType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isLoggiaTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isLoggiaTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in loggiaTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'loggia-' + type"
+                                        :value="type"
+                                        v-model="formData.loggiaType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'loggia-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -568,14 +736,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="entranceType">Тип входных групп (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="entranceType"
-                            v-model="formData.entranceType"
-                            class="form-input"
-                            placeholder="Укажите тип входных групп"
-                        >
+                        <label class="form-label">Тип входных групп (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleEntranceTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.entranceType.length === 0" class="placeholder">
+                                        Выберите тип входных групп
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.entranceType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isEntranceTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isEntranceTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in entranceTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'entrance-' + type"
+                                        :value="type"
+                                        v-model="formData.entranceType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'entrance-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -615,47 +804,131 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="heatingType">Тип центрального отопления (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="heatingType"
-                            v-model="formData.heatingType"
-                            class="form-input"
-                            placeholder="Укажите тип центрального отопления"
-                        >
+                        <label class="form-label">Тип центрального отопления (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHeatingTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.heatingType.length === 0" class="placeholder">
+                                        Выберите тип центрального отопления
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.heatingType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHeatingTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHeatingTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in heatingTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'heating-' + type"
+                                        :value="type"
+                                        v-model="formData.heatingType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'heating-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="heatingConnectionType">Тип подключения отопительных приборов</label>
-                        <input 
-                            type="text" 
-                            id="heatingConnectionType"
-                            v-model="formData.heatingConnectionType"
-                            class="form-input"
-                            placeholder="Укажите тип подключения отопительных приборов"
-                        >
+                        <label class="form-label">Тип подключения отопительных приборов</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHeatingConnectionTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.heatingConnectionType.length === 0" class="placeholder">
+                                        Выберите тип подключения отопительных приборов
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.heatingConnectionType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHeatingConnectionTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHeatingConnectionTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in heatingConnectionTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'heating-connection-' + type"
+                                        :value="type"
+                                        v-model="formData.heatingConnectionType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'heating-connection-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="heatingDistribution">Розлив системы центрального отопления</label>
-                        <input 
-                            type="text" 
-                            id="heatingDistribution"
-                            v-model="formData.heatingDistribution"
-                            class="form-input"
-                            placeholder="Укажите розлив системы центрального отопления"
-                        >
+                        <label class="form-label">Розлив системы центрального отопления</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHeatingDistributionDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.heatingDistribution.length === 0" class="placeholder">
+                                        Выберите розлив системы центрального отопления
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.heatingDistribution.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHeatingDistributionDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHeatingDistributionDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in heatingDistributionTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'heating-distribution-' + type"
+                                        :value="type"
+                                        v-model="formData.heatingDistribution"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'heating-distribution-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="heatingInputMaterial">Материал вводных труб</label>
-                        <input 
-                            type="text" 
-                            id="heatingInputMaterial"
-                            v-model="formData.heatingInputMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал вводных труб"
-                        >
+                        <label class="form-label">Материал вводных труб</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHeatingInputMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.heatingInputMaterial.length === 0" class="placeholder">
+                                        Выберите материал вводных труб
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.heatingInputMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHeatingInputMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHeatingInputMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'heating-input-material-' + type"
+                                        :value="type"
+                                        v-model="formData.heatingInputMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'heating-input-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -670,14 +943,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="heatingMainMaterial">Материал разводящих магистралей</label>
-                        <input 
-                            type="text" 
-                            id="heatingMainMaterial"
-                            v-model="formData.heatingMainMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал разводящих магистралей"
-                        >
+                        <label class="form-label">Материал разводящих магистралей</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHeatingMainMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.heatingMainMaterial.length === 0" class="placeholder">
+                                        Выберите материал разводящих магистралей
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.heatingMainMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHeatingMainMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHeatingMainMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'heating-main-material-' + type"
+                                        :value="type"
+                                        v-model="formData.heatingMainMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'heating-main-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -692,14 +986,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="heatingRiserMaterial">Материал стояков</label>
-                        <input 
-                            type="text" 
-                            id="heatingRiserMaterial"
-                            v-model="formData.heatingRiserMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал стояков"
-                        >
+                        <label class="form-label">Материал стояков</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHeatingRiserMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.heatingRiserMaterial.length === 0" class="placeholder">
+                                        Выберите материал стояков
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.heatingRiserMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHeatingRiserMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHeatingRiserMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'heating-riser-material-' + type"
+                                        :value="type"
+                                        v-model="formData.heatingRiserMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'heating-riser-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1198,16 +1513,16 @@ const DefectForm = {
                 wallStrength: '',
                 
                 // Перекрытия
-                floorType: '',
+                floorType: [],
                 concreteFloorStrength: '',
                 floorThickness: '',
                 floorBeamSpacing: '',
                 
                 // Крыши/Кровля
-                roofType: '',
-                roofStructure: '',
-                roofingStructure: '',
-                prefabRoofType: '',
+                roofType: [],
+                roofStructure: [],
+                roofingStructure: [],
+                prefabRoofType: [],
                 roofSlabThickness: '',
                 
                 // Стропильная система
@@ -1226,33 +1541,33 @@ const DefectForm = {
                 mop: '',
                 
                 // Лестницы
-                stairType: '',
+                stairType: [],
                 stringerType: '',
                 
                 // Балконы
-                balconyType: '',
+                balconyType: [],
                 balconyCharacteristics: '',
                 
                 // Лоджии
-                loggiaType: '',
+                loggiaType: [],
                 loggiaCharacteristics: '',
                 
                 // Входные группы
-                entranceType: '',
+                entranceType: [],
                 entranceCharacteristics: '',
                 
                 // Окна и двери
                 windowsDoors: '',
                 
                 // Центральное отопление
-                heatingType: '',
-                heatingConnectionType: '',
-                heatingDistribution: '',
-                heatingInputMaterial: '',
+                heatingType: [],
+                heatingConnectionType: [],
+                heatingDistribution: [],
+                heatingInputMaterial: [],
                 heatingInputDiameter: '',
-                heatingMainMaterial: '',
+                heatingMainMaterial: [],
                 heatingMainDiameter: '',
-                heatingRiserMaterial: '',
+                heatingRiserMaterial: [],
                 heatingRiserDiameter: '',
                 heatingCharacteristics: '',
                 
@@ -1312,6 +1627,21 @@ const DefectForm = {
             isExternalWallMaterialDropdownOpen: false,
             isInternalWallMaterialDropdownOpen: false,
             isPartitionMaterialDropdownOpen: false,
+            isFloorTypeDropdownOpen: false,
+            isRoofTypeDropdownOpen: false,
+            isRoofStructureDropdownOpen: false,
+            isRoofingStructureDropdownOpen: false,
+            isPrefabRoofTypeDropdownOpen: false,
+            isStairTypeDropdownOpen: false,
+            isBalconyTypeDropdownOpen: false,
+            isLoggiaTypeDropdownOpen: false,
+            isEntranceTypeDropdownOpen: false,
+            isHeatingTypeDropdownOpen: false,
+            isHeatingConnectionTypeDropdownOpen: false,
+            isHeatingDistributionDropdownOpen: false,
+            isHeatingInputMaterialDropdownOpen: false,
+            isHeatingMainMaterialDropdownOpen: false,
+            isHeatingRiserMaterialDropdownOpen: false,
             
             foundationTypes: [
                 'Нет подходящего описания',
@@ -1366,6 +1696,106 @@ const DefectForm = {
                 'панельные оштукатуренные'
             ],
             
+            floorTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Деревянные',
+                'Сборные железобетонные типа ПК',
+                'Сборные железобетонные панельные',
+                'Монолитные'
+            ],
+            
+            roofTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Совмещенная железобетонная',
+                'Чердачная',
+                'Деревянная стропильная'
+            ],
+            
+            roofStructureTypes: [
+                'Не выбрано',
+                'Деревянная стропильная система',
+                'Железобетонные плиты перекрытий'
+            ],
+            
+            roofingStructureTypes: [
+                'Не выбрано',
+                'Рулонные наплавляемые материалы',
+                'Асбестоцементные волнистые листы',
+                'Профилированные металлические листы',
+                'Фальцевая кровля'
+            ],
+            
+            prefabRoofTypes: [
+                'Не выбрано',
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Пустотные типа ПК',
+                'Ребристые плиты покрытия',
+                'Настилы типа НГ'
+            ],
+            
+            stairTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Деревянные лестницы',
+                'Лестницы из сборных ступеней по металлическим косоурам',
+                'Сборные железобетонные лестницы'
+            ],
+            
+            balconyTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Консольные балконы на балках',
+                'Консольные сборные железобетонные балконы',
+                'Деревянные балконы'
+            ],
+            
+            loggiaTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Лоджии сборные железобетонные',
+                'Монолитные'
+            ],
+            
+            entranceTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Входные группы с металлическим каркасом',
+                'ЖБ козырьки и бетонные площадки',
+                'Деревянные входные группы',
+                'Входные группы из сборных железобетонных элементов'
+            ],
+            
+            heatingTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Центральное',
+                'Индивидуальное'
+            ],
+            
+            heatingConnectionTypes: [
+                'Не выбрано',
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Однотрубное',
+                'Двухтрубное'
+            ],
+            
+            heatingDistributionTypes: [
+                'Не выбрано',
+                'Нижняя',
+                'Верхняя'
+            ],
+            
+            pipeMaterialTypes: [
+                'стальные',
+                'ПП',
+                'ПНД',
+                'металлопластиковые'
+            ],
+            
             isVerified: false,
             submitMessage: '',
             submitMessageClass: ''
@@ -1406,12 +1836,102 @@ const DefectForm = {
             this.closeOtherDropdowns('partitionMaterial');
         },
         
+        toggleFloorTypeDropdown() {
+            this.isFloorTypeDropdownOpen = !this.isFloorTypeDropdownOpen;
+            this.closeOtherDropdowns('floorType');
+        },
+        
+        toggleRoofTypeDropdown() {
+            this.isRoofTypeDropdownOpen = !this.isRoofTypeDropdownOpen;
+            this.closeOtherDropdowns('roofType');
+        },
+        
+        toggleRoofStructureDropdown() {
+            this.isRoofStructureDropdownOpen = !this.isRoofStructureDropdownOpen;
+            this.closeOtherDropdowns('roofStructure');
+        },
+        
+        toggleRoofingStructureDropdown() {
+            this.isRoofingStructureDropdownOpen = !this.isRoofingStructureDropdownOpen;
+            this.closeOtherDropdowns('roofingStructure');
+        },
+        
+        togglePrefabRoofTypeDropdown() {
+            this.isPrefabRoofTypeDropdownOpen = !this.isPrefabRoofTypeDropdownOpen;
+            this.closeOtherDropdowns('prefabRoofType');
+        },
+        
+        toggleStairTypeDropdown() {
+            this.isStairTypeDropdownOpen = !this.isStairTypeDropdownOpen;
+            this.closeOtherDropdowns('stairType');
+        },
+        
+        toggleBalconyTypeDropdown() {
+            this.isBalconyTypeDropdownOpen = !this.isBalconyTypeDropdownOpen;
+            this.closeOtherDropdowns('balconyType');
+        },
+        
+        toggleLoggiaTypeDropdown() {
+            this.isLoggiaTypeDropdownOpen = !this.isLoggiaTypeDropdownOpen;
+            this.closeOtherDropdowns('loggiaType');
+        },
+        
+        toggleEntranceTypeDropdown() {
+            this.isEntranceTypeDropdownOpen = !this.isEntranceTypeDropdownOpen;
+            this.closeOtherDropdowns('entranceType');
+        },
+        
+        toggleHeatingTypeDropdown() {
+            this.isHeatingTypeDropdownOpen = !this.isHeatingTypeDropdownOpen;
+            this.closeOtherDropdowns('heatingType');
+        },
+        
+        toggleHeatingConnectionTypeDropdown() {
+            this.isHeatingConnectionTypeDropdownOpen = !this.isHeatingConnectionTypeDropdownOpen;
+            this.closeOtherDropdowns('heatingConnectionType');
+        },
+        
+        toggleHeatingDistributionDropdown() {
+            this.isHeatingDistributionDropdownOpen = !this.isHeatingDistributionDropdownOpen;
+            this.closeOtherDropdowns('heatingDistribution');
+        },
+        
+        toggleHeatingInputMaterialDropdown() {
+            this.isHeatingInputMaterialDropdownOpen = !this.isHeatingInputMaterialDropdownOpen;
+            this.closeOtherDropdowns('heatingInputMaterial');
+        },
+        
+        toggleHeatingMainMaterialDropdown() {
+            this.isHeatingMainMaterialDropdownOpen = !this.isHeatingMainMaterialDropdownOpen;
+            this.closeOtherDropdowns('heatingMainMaterial');
+        },
+        
+        toggleHeatingRiserMaterialDropdown() {
+            this.isHeatingRiserMaterialDropdownOpen = !this.isHeatingRiserMaterialDropdownOpen;
+            this.closeOtherDropdowns('heatingRiserMaterial');
+        },
+        
         closeOtherDropdowns(except) {
             if (except !== 'foundation') this.isFoundationDropdownOpen = false;
             if (except !== 'wall') this.isWallDropdownOpen = false;
             if (except !== 'externalWallMaterial') this.isExternalWallMaterialDropdownOpen = false;
             if (except !== 'internalWallMaterial') this.isInternalWallMaterialDropdownOpen = false;
             if (except !== 'partitionMaterial') this.isPartitionMaterialDropdownOpen = false;
+            if (except !== 'floorType') this.isFloorTypeDropdownOpen = false;
+            if (except !== 'roofType') this.isRoofTypeDropdownOpen = false;
+            if (except !== 'roofStructure') this.isRoofStructureDropdownOpen = false;
+            if (except !== 'roofingStructure') this.isRoofingStructureDropdownOpen = false;
+            if (except !== 'prefabRoofType') this.isPrefabRoofTypeDropdownOpen = false;
+            if (except !== 'stairType') this.isStairTypeDropdownOpen = false;
+            if (except !== 'balconyType') this.isBalconyTypeDropdownOpen = false;
+            if (except !== 'loggiaType') this.isLoggiaTypeDropdownOpen = false;
+            if (except !== 'entranceType') this.isEntranceTypeDropdownOpen = false;
+            if (except !== 'heatingType') this.isHeatingTypeDropdownOpen = false;
+            if (except !== 'heatingConnectionType') this.isHeatingConnectionTypeDropdownOpen = false;
+            if (except !== 'heatingDistribution') this.isHeatingDistributionDropdownOpen = false;
+            if (except !== 'heatingInputMaterial') this.isHeatingInputMaterialDropdownOpen = false;
+            if (except !== 'heatingMainMaterial') this.isHeatingMainMaterialDropdownOpen = false;
+            if (except !== 'heatingRiserMaterial') this.isHeatingRiserMaterialDropdownOpen = false;
         },
         
         closeAllDropdowns() {
@@ -1420,6 +1940,21 @@ const DefectForm = {
             this.isExternalWallMaterialDropdownOpen = false;
             this.isInternalWallMaterialDropdownOpen = false;
             this.isPartitionMaterialDropdownOpen = false;
+            this.isFloorTypeDropdownOpen = false;
+            this.isRoofTypeDropdownOpen = false;
+            this.isRoofStructureDropdownOpen = false;
+            this.isRoofingStructureDropdownOpen = false;
+            this.isPrefabRoofTypeDropdownOpen = false;
+            this.isStairTypeDropdownOpen = false;
+            this.isBalconyTypeDropdownOpen = false;
+            this.isLoggiaTypeDropdownOpen = false;
+            this.isEntranceTypeDropdownOpen = false;
+            this.isHeatingTypeDropdownOpen = false;
+            this.isHeatingConnectionTypeDropdownOpen = false;
+            this.isHeatingDistributionDropdownOpen = false;
+            this.isHeatingInputMaterialDropdownOpen = false;
+            this.isHeatingMainMaterialDropdownOpen = false;
+            this.isHeatingRiserMaterialDropdownOpen = false;
         },
         
         handleFileUpload(event) {
@@ -1472,6 +2007,78 @@ const DefectForm = {
                 formDataToSend.append('wallFinish', this.formData.wallFinish);
                 formDataToSend.append('partitionMaterial', JSON.stringify(this.formData.partitionMaterial));
                 formDataToSend.append('wallStrength', this.formData.wallStrength);
+                formDataToSend.append('floorType', JSON.stringify(this.formData.floorType));
+                formDataToSend.append('concreteFloorStrength', this.formData.concreteFloorStrength);
+                formDataToSend.append('floorThickness', this.formData.floorThickness);
+                formDataToSend.append('floorBeamSpacing', this.formData.floorBeamSpacing);
+                formDataToSend.append('roofType', JSON.stringify(this.formData.roofType));
+                formDataToSend.append('roofStructure', JSON.stringify(this.formData.roofStructure));
+                formDataToSend.append('roofingStructure', JSON.stringify(this.formData.roofingStructure));
+                formDataToSend.append('prefabRoofType', JSON.stringify(this.formData.prefabRoofType));
+                formDataToSend.append('roofSlabThickness', this.formData.roofSlabThickness);
+                formDataToSend.append('rafterSystemCharacteristics', this.formData.rafterSystemCharacteristics);
+                formDataToSend.append('frontonRidgeHeight', this.formData.frontonRidgeHeight);
+                formDataToSend.append('mainRidgeHeight', this.formData.mainRidgeHeight);
+                formDataToSend.append('rafterLegs', this.formData.rafterLegs);
+                formDataToSend.append('sheathing', this.formData.sheathing);
+                formDataToSend.append('strut', this.formData.strut);
+                formDataToSend.append('purlin', this.formData.purlin);
+                formDataToSend.append('brace', this.formData.brace);
+                formDataToSend.append('layingBeam', this.formData.layingBeam);
+                formDataToSend.append('mauerlat', this.formData.mauerlat);
+                formDataToSend.append('mop', this.formData.mop);
+                formDataToSend.append('stairType', JSON.stringify(this.formData.stairType));
+                formDataToSend.append('stringerType', this.formData.stringerType);
+                formDataToSend.append('balconyType', JSON.stringify(this.formData.balconyType));
+                formDataToSend.append('balconyCharacteristics', this.formData.balconyCharacteristics);
+                formDataToSend.append('loggiaType', JSON.stringify(this.formData.loggiaType));
+                formDataToSend.append('loggiaCharacteristics', this.formData.loggiaCharacteristics);
+                formDataToSend.append('entranceType', JSON.stringify(this.formData.entranceType));
+                formDataToSend.append('entranceCharacteristics', this.formData.entranceCharacteristics);
+                formDataToSend.append('windowsDoors', this.formData.windowsDoors);
+                formDataToSend.append('heatingType', JSON.stringify(this.formData.heatingType));
+                formDataToSend.append('heatingConnectionType', JSON.stringify(this.formData.heatingConnectionType));
+                formDataToSend.append('heatingDistribution', JSON.stringify(this.formData.heatingDistribution));
+                formDataToSend.append('heatingInputMaterial', JSON.stringify(this.formData.heatingInputMaterial));
+                formDataToSend.append('heatingInputDiameter', this.formData.heatingInputDiameter);
+                formDataToSend.append('heatingMainMaterial', JSON.stringify(this.formData.heatingMainMaterial));
+                formDataToSend.append('heatingMainDiameter', this.formData.heatingMainDiameter);
+                formDataToSend.append('heatingRiserMaterial', JSON.stringify(this.formData.heatingRiserMaterial));
+                formDataToSend.append('heatingRiserDiameter', this.formData.heatingRiserDiameter);
+                formDataToSend.append('heatingCharacteristics', this.formData.heatingCharacteristics);
+                formDataToSend.append('coldWaterType', this.formData.coldWaterType);
+                formDataToSend.append('coldWaterDistribution', this.formData.coldWaterDistribution);
+                formDataToSend.append('coldWaterInputMaterial', this.formData.coldWaterInputMaterial);
+                formDataToSend.append('coldWaterInputDiameter', this.formData.coldWaterInputDiameter);
+                formDataToSend.append('coldWaterMainMaterial', this.formData.coldWaterMainMaterial);
+                formDataToSend.append('coldWaterMainDiameter', this.formData.coldWaterMainDiameter);
+                formDataToSend.append('coldWaterRiserMaterial', this.formData.coldWaterRiserMaterial);
+                formDataToSend.append('coldWaterRiserDiameter', this.formData.coldWaterRiserDiameter);
+                formDataToSend.append('hotWaterType', this.formData.hotWaterType);
+                formDataToSend.append('hotWaterDistribution', this.formData.hotWaterDistribution);
+                formDataToSend.append('hotWaterInputMaterial', this.formData.hotWaterInputMaterial);
+                formDataToSend.append('hotWaterInputDiameter', this.formData.hotWaterInputDiameter);
+                formDataToSend.append('hotWaterMainMaterial', this.formData.hotWaterMainMaterial);
+                formDataToSend.append('hotWaterMainDiameter', this.formData.hotWaterMainDiameter);
+                formDataToSend.append('hotWaterRiserMaterial', this.formData.hotWaterRiserMaterial);
+                formDataToSend.append('hotWaterRiserDiameter', this.formData.hotWaterRiserDiameter);
+                formDataToSend.append('fireWaterSupply', this.formData.fireWaterSupply);
+                formDataToSend.append('waterDrainMaterial', this.formData.waterDrainMaterial);
+                formDataToSend.append('waterDrainDiameter', this.formData.waterDrainDiameter);
+                formDataToSend.append('sewerageType', this.formData.sewerageType);
+                formDataToSend.append('sewerageRiserMaterial', this.formData.sewerageRiserMaterial);
+                formDataToSend.append('sewerageRiserDiameter', this.formData.sewerageRiserDiameter);
+                formDataToSend.append('sewerageOutputDiameter', this.formData.sewerageOutputDiameter);
+                formDataToSend.append('seweragePipeDiameter', this.formData.seweragePipeDiameter);
+                formDataToSend.append('drainageType', this.formData.drainageType);
+                formDataToSend.append('gutterType', this.formData.gutterType);
+                formDataToSend.append('drainagePipeMaterial', this.formData.drainagePipeMaterial);
+                formDataToSend.append('vruLocation', this.formData.vruLocation);
+                formDataToSend.append('buildingConnectionType', this.formData.buildingConnectionType);
+                formDataToSend.append('distributionPanelLocation', this.formData.distributionPanelLocation);
+                formDataToSend.append('ventilationType', this.formData.ventilationType);
+                formDataToSend.append('gasDistributionType', this.formData.gasDistributionType);
+                formDataToSend.append('electricalSystems', this.formData.electricalSystems);
                 formDataToSend.append('submittedAt', new Date().toISOString());
                 
                 this.formData.photos.forEach((photo, index) => {
@@ -1516,16 +2123,16 @@ const DefectForm = {
                 wallStrength: '',
                 
                 // Перекрытия
-                floorType: '',
+                floorType: [],
                 concreteFloorStrength: '',
                 floorThickness: '',
                 floorBeamSpacing: '',
                 
                 // Крыши/Кровля
-                roofType: '',
-                roofStructure: '',
-                roofingStructure: '',
-                prefabRoofType: '',
+                roofType: [],
+                roofStructure: [],
+                roofingStructure: [],
+                prefabRoofType: [],
                 roofSlabThickness: '',
                 
                 // Стропильная система
@@ -1544,33 +2151,33 @@ const DefectForm = {
                 mop: '',
                 
                 // Лестницы
-                stairType: '',
+                stairType: [],
                 stringerType: '',
                 
                 // Балконы
-                balconyType: '',
+                balconyType: [],
                 balconyCharacteristics: '',
                 
                 // Лоджии
-                loggiaType: '',
+                loggiaType: [],
                 loggiaCharacteristics: '',
                 
                 // Входные группы
-                entranceType: '',
+                entranceType: [],
                 entranceCharacteristics: '',
                 
                 // Окна и двери
                 windowsDoors: '',
                 
                 // Центральное отопление
-                heatingType: '',
-                heatingConnectionType: '',
-                heatingDistribution: '',
-                heatingInputMaterial: '',
+                heatingType: [],
+                heatingConnectionType: [],
+                heatingDistribution: [],
+                heatingInputMaterial: [],
                 heatingInputDiameter: '',
-                heatingMainMaterial: '',
+                heatingMainMaterial: [],
                 heatingMainDiameter: '',
-                heatingRiserMaterial: '',
+                heatingRiserMaterial: [],
                 heatingRiserDiameter: '',
                 heatingCharacteristics: '',
                 
