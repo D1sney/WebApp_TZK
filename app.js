@@ -1045,36 +1045,99 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="coldWaterType">Тип холодного водоснабжения (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="coldWaterType"
-                            v-model="formData.coldWaterType"
-                            class="form-input"
-                            placeholder="Укажите тип холодного водоснабжения"
-                        >
+                        <label class="form-label">Тип холодного водоснабжения (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColdWaterTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.coldWaterType.length === 0" class="placeholder">
+                                        Выберите тип холодного водоснабжения
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.coldWaterType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColdWaterTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColdWaterTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in coldWaterTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'cold-water-type-' + type"
+                                        :value="type"
+                                        v-model="formData.coldWaterType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'cold-water-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="coldWaterDistribution">Разводка (подача) системы водоснабжения (хвс)</label>
-                        <input 
-                            type="text" 
-                            id="coldWaterDistribution"
-                            v-model="formData.coldWaterDistribution"
-                            class="form-input"
-                            placeholder="Укажите разводку системы водоснабжения (хвс)"
-                        >
+                        <label class="form-label">Разводка (подача) системы водоснабжения (хвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColdWaterDistributionDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.coldWaterDistribution.length === 0" class="placeholder">
+                                        Выберите разводку системы водоснабжения (хвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.coldWaterDistribution.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColdWaterDistributionDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColdWaterDistributionDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in waterDistributionTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'cold-water-distribution-' + type"
+                                        :value="type"
+                                        v-model="formData.coldWaterDistribution"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'cold-water-distribution-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="coldWaterInputMaterial">Материал вводных труб (хвс)</label>
-                        <input 
-                            type="text" 
-                            id="coldWaterInputMaterial"
-                            v-model="formData.coldWaterInputMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал вводных труб (хвс)"
-                        >
+                        <label class="form-label">Материал вводных труб (хвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColdWaterInputMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.coldWaterInputMaterial.length === 0" class="placeholder">
+                                        Выберите материал вводных труб (хвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.coldWaterInputMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColdWaterInputMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColdWaterInputMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'cold-water-input-material-' + type"
+                                        :value="type"
+                                        v-model="formData.coldWaterInputMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'cold-water-input-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1089,14 +1152,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="coldWaterMainMaterial">Материал разводящих магистралей (хвс)</label>
-                        <input 
-                            type="text" 
-                            id="coldWaterMainMaterial"
-                            v-model="formData.coldWaterMainMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал разводящих магистралей (хвс)"
-                        >
+                        <label class="form-label">Материал разводящих магистралей (хвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColdWaterMainMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.coldWaterMainMaterial.length === 0" class="placeholder">
+                                        Выберите материал разводящих магистралей (хвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.coldWaterMainMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColdWaterMainMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColdWaterMainMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'cold-water-main-material-' + type"
+                                        :value="type"
+                                        v-model="formData.coldWaterMainMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'cold-water-main-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1111,14 +1195,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="coldWaterRiserMaterial">Материал стояков (хвс)</label>
-                        <input 
-                            type="text" 
-                            id="coldWaterRiserMaterial"
-                            v-model="formData.coldWaterRiserMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал стояков (хвс)"
-                        >
+                        <label class="form-label">Материал стояков (хвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleColdWaterRiserMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.coldWaterRiserMaterial.length === 0" class="placeholder">
+                                        Выберите материал стояков (хвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.coldWaterRiserMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isColdWaterRiserMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isColdWaterRiserMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'cold-water-riser-material-' + type"
+                                        :value="type"
+                                        v-model="formData.coldWaterRiserMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'cold-water-riser-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1138,36 +1243,99 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="hotWaterType">Тип горячего водоснабжения (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="hotWaterType"
-                            v-model="formData.hotWaterType"
-                            class="form-input"
-                            placeholder="Укажите тип горячего водоснабжения"
-                        >
+                        <label class="form-label">Тип горячего водоснабжения (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHotWaterTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.hotWaterType.length === 0" class="placeholder">
+                                        Выберите тип горячего водоснабжения
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.hotWaterType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHotWaterTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHotWaterTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in hotWaterTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'hot-water-type-' + type"
+                                        :value="type"
+                                        v-model="formData.hotWaterType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'hot-water-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="hotWaterDistribution">Разводка (подача) системы водоснабжения (гвс)</label>
-                        <input 
-                            type="text" 
-                            id="hotWaterDistribution"
-                            v-model="formData.hotWaterDistribution"
-                            class="form-input"
-                            placeholder="Укажите разводку системы водоснабжения (гвс)"
-                        >
+                        <label class="form-label">Разводка (подача) системы водоснабжения (гвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHotWaterDistributionDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.hotWaterDistribution.length === 0" class="placeholder">
+                                        Выберите разводку системы водоснабжения (гвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.hotWaterDistribution.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHotWaterDistributionDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHotWaterDistributionDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in waterDistributionTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'hot-water-distribution-' + type"
+                                        :value="type"
+                                        v-model="formData.hotWaterDistribution"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'hot-water-distribution-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="hotWaterInputMaterial">Материал вводных труб (гвс)</label>
-                        <input 
-                            type="text" 
-                            id="hotWaterInputMaterial"
-                            v-model="formData.hotWaterInputMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал вводных труб (гвс)"
-                        >
+                        <label class="form-label">Материал вводных труб (гвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHotWaterInputMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.hotWaterInputMaterial.length === 0" class="placeholder">
+                                        Выберите материал вводных труб (гвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.hotWaterInputMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHotWaterInputMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHotWaterInputMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'hot-water-input-material-' + type"
+                                        :value="type"
+                                        v-model="formData.hotWaterInputMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'hot-water-input-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1182,14 +1350,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="hotWaterMainMaterial">Материал разводящих магистралей (гвс)</label>
-                        <input 
-                            type="text" 
-                            id="hotWaterMainMaterial"
-                            v-model="formData.hotWaterMainMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал разводящих магистралей (гвс)"
-                        >
+                        <label class="form-label">Материал разводящих магистралей (гвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHotWaterMainMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.hotWaterMainMaterial.length === 0" class="placeholder">
+                                        Выберите материал разводящих магистралей (гвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.hotWaterMainMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHotWaterMainMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHotWaterMainMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'hot-water-main-material-' + type"
+                                        :value="type"
+                                        v-model="formData.hotWaterMainMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'hot-water-main-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1204,14 +1393,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="hotWaterRiserMaterial">Материал стояков (гвс)</label>
-                        <input 
-                            type="text" 
-                            id="hotWaterRiserMaterial"
-                            v-model="formData.hotWaterRiserMaterial"
-                            class="form-input"
-                            placeholder="Укажите материал стояков (гвс)"
-                        >
+                        <label class="form-label">Материал стояков (гвс)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleHotWaterRiserMaterialDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.hotWaterRiserMaterial.length === 0" class="placeholder">
+                                        Выберите материал стояков (гвс)
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.hotWaterRiserMaterial.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isHotWaterRiserMaterialDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isHotWaterRiserMaterialDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in pipeMaterialTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'hot-water-riser-material-' + type"
+                                        :value="type"
+                                        v-model="formData.hotWaterRiserMaterial"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'hot-water-riser-material-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1227,13 +1437,34 @@ const DefectForm = {
                     
                     <div class="form-group">
                         <label class="form-label" for="fireWaterSupply">Противопожарное водоснабжение (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="fireWaterSupply"
-                            v-model="formData.fireWaterSupply"
-                            class="form-input"
-                            placeholder="Укажите противопожарное водоснабжение"
-                        >
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleFireWaterSupplyDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.fireWaterSupply.length === 0" class="placeholder">
+                                        Выберите противопожарное водоснабжение
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.fireWaterSupply.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isFireWaterSupplyDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isFireWaterSupplyDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in fireWaterSupplyTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'fire-water-supply-' + type"
+                                        :value="type"
+                                        v-model="formData.fireWaterSupply"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'fire-water-supply-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1264,14 +1495,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="sewerageType">Тип канализации (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="sewerageType"
-                            v-model="formData.sewerageType"
-                            class="form-input"
-                            placeholder="Укажите тип канализации"
-                        >
+                        <label class="form-label">Тип канализации (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleSewerageTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.sewerageType.length === 0" class="placeholder">
+                                        Выберите тип канализации
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.sewerageType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isSewerageTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isSewerageTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in sewerageTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'sewerage-type-' + type"
+                                        :value="type"
+                                        v-model="formData.sewerageType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'sewerage-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -1324,29 +1576,71 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="drainageType">Тип водоотведения (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="drainageType"
-                            v-model="formData.drainageType"
-                            class="form-input"
-                            placeholder="Укажите тип водоотведения"
-                        >
+                        <label class="form-label">Тип водоотведения (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleDrainageTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.drainageType.length === 0" class="placeholder">
+                                        Выберите тип водоотведения
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.drainageType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isDrainageTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isDrainageTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in drainageTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'drainage-type-' + type"
+                                        :value="type"
+                                        v-model="formData.drainageType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'drainage-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="gutterType">Тип водостока</label>
-                        <input 
-                            type="text" 
-                            id="gutterType"
-                            v-model="formData.gutterType"
-                            class="form-input"
-                            placeholder="Укажите тип водостока"
-                        >
+                        <label class="form-label">Тип водостока</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleGutterTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.gutterType.length === 0" class="placeholder">
+                                        Выберите тип водостока
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.gutterType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isGutterTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isGutterTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in gutterTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'gutter-type-' + type"
+                                        :value="type"
+                                        v-model="formData.gutterType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'gutter-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="drainagePipeMaterial">Материал труб (водоотведение)</label>
+                        <label class="form-label">Материал труб (водоотведение)</label>
                         <input 
                             type="text" 
                             id="drainagePipeMaterial"
@@ -1369,24 +1663,66 @@ const DefectForm = {
                     
                     <div class="form-group">
                         <label class="form-label" for="buildingConnectionType">Тип подключения здания (зом)</label>
-                        <input 
-                            type="text" 
-                            id="buildingConnectionType"
-                            v-model="formData.buildingConnectionType"
-                            class="form-input"
-                            placeholder="Укажите тип подключения здания"
-                        >
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleBuildingConnectionTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.buildingConnectionType.length === 0" class="placeholder">
+                                        Выберите тип подключения здания
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.buildingConnectionType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isBuildingConnectionTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isBuildingConnectionTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in buildingConnectionTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'building-connection-type-' + type"
+                                        :value="type"
+                                        v-model="formData.buildingConnectionType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'building-connection-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="distributionPanelLocation">Расположение щитов распределительных (зом)</label>
-                        <input 
-                            type="text" 
-                            id="distributionPanelLocation"
-                            v-model="formData.distributionPanelLocation"
-                            class="form-input"
-                            placeholder="Укажите расположение щитов распределительных"
-                        >
+                        <label class="form-label">Расположение щитов распределительных (зом)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleDistributionPanelLocationDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.distributionPanelLocation.length === 0" class="placeholder">
+                                        Выберите расположение щитов распределительных
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.distributionPanelLocation.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isDistributionPanelLocationDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isDistributionPanelLocationDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in distributionPanelLocationTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'distribution-panel-location-' + type"
+                                        :value="type"
+                                        v-model="formData.distributionPanelLocation"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'distribution-panel-location-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Вентиляция -->
@@ -1395,14 +1731,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="ventilationType">Тип вентиляции (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="ventilationType"
-                            v-model="formData.ventilationType"
-                            class="form-input"
-                            placeholder="Укажите тип вентиляции"
-                        >
+                        <label class="form-label">Тип вентиляции (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleVentilationTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.ventilationType.length === 0" class="placeholder">
+                                        Выберите тип вентиляции
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.ventilationType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isVentilationTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isVentilationTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in ventilationTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'ventilation-type-' + type"
+                                        :value="type"
+                                        v-model="formData.ventilationType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'ventilation-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Газоснабжение -->
@@ -1411,14 +1768,35 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="gasDistributionType">Тип разводки магистралей газоснабжения (тзк)</label>
-                        <input 
-                            type="text" 
-                            id="gasDistributionType"
-                            v-model="formData.gasDistributionType"
-                            class="form-input"
-                            placeholder="Укажите тип разводки магистралей газоснабжения"
-                        >
+                        <label class="form-label">Тип разводки магистралей газоснабжения (тзк)</label>
+                        <div class="custom-select-container" @click.stop>
+                            <div class="custom-select" @click="toggleGasDistributionTypeDropdown">
+                                <div class="select-display">
+                                    <span v-if="formData.gasDistributionType.length === 0" class="placeholder">
+                                        Выберите тип разводки магистралей газоснабжения
+                                    </span>
+                                    <span v-else class="selected-values">
+                                        {{ formData.gasDistributionType.join(', ') }}
+                                    </span>
+                                </div>
+                                <div class="select-arrow" :class="{ 'open': isGasDistributionTypeDropdownOpen }">▼</div>
+                            </div>
+                            
+                            <div v-if="isGasDistributionTypeDropdownOpen" class="custom-dropdown">
+                                <div v-for="type in gasDistributionTypes" :key="type" class="dropdown-item">
+                                    <input 
+                                        type="checkbox" 
+                                        :id="'gas-distribution-type-' + type"
+                                        :value="type"
+                                        v-model="formData.gasDistributionType"
+                                        class="dropdown-checkbox"
+                                    >
+                                    <label :for="'gas-distribution-type-' + type" class="dropdown-label">
+                                        {{ type }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- ЭОМ -->
@@ -1572,48 +1950,48 @@ const DefectForm = {
                 heatingCharacteristics: '',
                 
                 // ХВС
-                coldWaterType: '',
-                coldWaterDistribution: '',
-                coldWaterInputMaterial: '',
+                coldWaterType: [],
+                coldWaterDistribution: [],
+                coldWaterInputMaterial: [],
                 coldWaterInputDiameter: '',
-                coldWaterMainMaterial: '',
+                coldWaterMainMaterial: [],
                 coldWaterMainDiameter: '',
-                coldWaterRiserMaterial: '',
+                coldWaterRiserMaterial: [],
                 coldWaterRiserDiameter: '',
                 
                 // ГВС
-                hotWaterType: '',
-                hotWaterDistribution: '',
-                hotWaterInputMaterial: '',
+                hotWaterType: [],
+                hotWaterDistribution: [],
+                hotWaterInputMaterial: [],
                 hotWaterInputDiameter: '',
-                hotWaterMainMaterial: '',
+                hotWaterMainMaterial: [],
                 hotWaterMainDiameter: '',
-                hotWaterRiserMaterial: '',
+                hotWaterRiserMaterial: [],
                 hotWaterRiserDiameter: '',
-                fireWaterSupply: '',
+                fireWaterSupply: [],
                 waterDrainMaterial: '',
                 waterDrainDiameter: '',
                 
                 // Канализация
-                sewerageType: '',
+                sewerageType: [],
                 sewerageRiserMaterial: '',
                 sewerageRiserDiameter: '',
                 sewerageOutputDiameter: '',
                 seweragePipeDiameter: '',
                 
                 // Водоотведение
-                drainageType: '',
-                gutterType: '',
+                drainageType: [],
+                gutterType: [],
                 drainagePipeMaterial: '',
                 vruLocation: '',
                 buildingConnectionType: '',
                 distributionPanelLocation: '',
                 
                 // Вентиляция
-                ventilationType: '',
+                ventilationType: [],
                 
                 // Газоснабжение
-                gasDistributionType: '',
+                gasDistributionType: [],
                 
                 // ЭОМ
                 electricalSystems: '',
@@ -1642,6 +2020,24 @@ const DefectForm = {
             isHeatingInputMaterialDropdownOpen: false,
             isHeatingMainMaterialDropdownOpen: false,
             isHeatingRiserMaterialDropdownOpen: false,
+            isColdWaterTypeDropdownOpen: false,
+            isColdWaterDistributionDropdownOpen: false,
+            isColdWaterInputMaterialDropdownOpen: false,
+            isColdWaterMainMaterialDropdownOpen: false,
+            isColdWaterRiserMaterialDropdownOpen: false,
+            isHotWaterTypeDropdownOpen: false,
+            isHotWaterDistributionDropdownOpen: false,
+            isHotWaterInputMaterialDropdownOpen: false,
+            isHotWaterMainMaterialDropdownOpen: false,
+            isHotWaterRiserMaterialDropdownOpen: false,
+            isFireWaterSupplyDropdownOpen: false,
+            isSewerageTypeDropdownOpen: false,
+            isDrainageTypeDropdownOpen: false,
+            isGutterTypeDropdownOpen: false,
+            isBuildingConnectionTypeDropdownOpen: false,
+            isDistributionPanelLocationDropdownOpen: false,
+            isVentilationTypeDropdownOpen: false,
+            isGasDistributionTypeDropdownOpen: false,
             
             foundationTypes: [
                 'Нет подходящего описания',
@@ -1796,6 +2192,81 @@ const DefectForm = {
                 'металлопластиковые'
             ],
             
+            coldWaterTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Центральное',
+                'Индивидуальное'
+            ],
+            
+            hotWaterTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Центральное',
+                'Индивидуальное'
+            ],
+            
+            waterDistributionTypes: [
+                'Не выбрано',
+                'Нижняя',
+                'Верхняя'
+            ],
+            
+            fireWaterSupplyTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Централизованное (самотоятельное)',
+                'Подключение к холодному водоснабжению'
+            ],
+            
+            sewerageTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'Централизованная',
+                'Индивидуальная'
+            ],
+            
+            drainageTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Внутренний организованный водосток'
+            ],
+            
+            gutterTypes: [
+                'Не выбрано',
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Наружный организованный',
+                'Наружный неорганизованный',
+                'Внутренний'
+            ],
+            
+            buildingConnectionTypes: [
+                'Не выбрано',
+                'Нет подходящего описания',
+                'Отсутствуют'
+            ],
+            
+            distributionPanelLocationTypes: [
+                'Не выбрано',
+                'Лестничные клетки',
+                'Квартиры'
+            ],
+            
+            ventilationTypes: [
+                'Нет подходящего описания',
+                'Отсутствуют',
+                'Естественного побуждения',
+                'Принудительного побуждения'
+            ],
+            
+            gasDistributionTypes: [
+                'Нет подходящего описания',
+                'Отсутствует',
+                'по фасаду',
+                'по подвалу'
+            ],
+            
             isVerified: false,
             submitMessage: '',
             submitMessageClass: ''
@@ -1911,6 +2382,96 @@ const DefectForm = {
             this.closeOtherDropdowns('heatingRiserMaterial');
         },
         
+        toggleColdWaterTypeDropdown() {
+            this.isColdWaterTypeDropdownOpen = !this.isColdWaterTypeDropdownOpen;
+            this.closeOtherDropdowns('coldWaterType');
+        },
+        
+        toggleColdWaterDistributionDropdown() {
+            this.isColdWaterDistributionDropdownOpen = !this.isColdWaterDistributionDropdownOpen;
+            this.closeOtherDropdowns('coldWaterDistribution');
+        },
+        
+        toggleColdWaterInputMaterialDropdown() {
+            this.isColdWaterInputMaterialDropdownOpen = !this.isColdWaterInputMaterialDropdownOpen;
+            this.closeOtherDropdowns('coldWaterInputMaterial');
+        },
+        
+        toggleColdWaterMainMaterialDropdown() {
+            this.isColdWaterMainMaterialDropdownOpen = !this.isColdWaterMainMaterialDropdownOpen;
+            this.closeOtherDropdowns('coldWaterMainMaterial');
+        },
+        
+        toggleColdWaterRiserMaterialDropdown() {
+            this.isColdWaterRiserMaterialDropdownOpen = !this.isColdWaterRiserMaterialDropdownOpen;
+            this.closeOtherDropdowns('coldWaterRiserMaterial');
+        },
+        
+        toggleHotWaterTypeDropdown() {
+            this.isHotWaterTypeDropdownOpen = !this.isHotWaterTypeDropdownOpen;
+            this.closeOtherDropdowns('hotWaterType');
+        },
+        
+        toggleHotWaterDistributionDropdown() {
+            this.isHotWaterDistributionDropdownOpen = !this.isHotWaterDistributionDropdownOpen;
+            this.closeOtherDropdowns('hotWaterDistribution');
+        },
+        
+        toggleHotWaterInputMaterialDropdown() {
+            this.isHotWaterInputMaterialDropdownOpen = !this.isHotWaterInputMaterialDropdownOpen;
+            this.closeOtherDropdowns('hotWaterInputMaterial');
+        },
+        
+        toggleHotWaterMainMaterialDropdown() {
+            this.isHotWaterMainMaterialDropdownOpen = !this.isHotWaterMainMaterialDropdownOpen;
+            this.closeOtherDropdowns('hotWaterMainMaterial');
+        },
+        
+        toggleHotWaterRiserMaterialDropdown() {
+            this.isHotWaterRiserMaterialDropdownOpen = !this.isHotWaterRiserMaterialDropdownOpen;
+            this.closeOtherDropdowns('hotWaterRiserMaterial');
+        },
+        
+        toggleFireWaterSupplyDropdown() {
+            this.isFireWaterSupplyDropdownOpen = !this.isFireWaterSupplyDropdownOpen;
+            this.closeOtherDropdowns('fireWaterSupply');
+        },
+        
+        toggleSewerageTypeDropdown() {
+            this.isSewerageTypeDropdownOpen = !this.isSewerageTypeDropdownOpen;
+            this.closeOtherDropdowns('sewerageType');
+        },
+        
+        toggleDrainageTypeDropdown() {
+            this.isDrainageTypeDropdownOpen = !this.isDrainageTypeDropdownOpen;
+            this.closeOtherDropdowns('drainageType');
+        },
+        
+        toggleGutterTypeDropdown() {
+            this.isGutterTypeDropdownOpen = !this.isGutterTypeDropdownOpen;
+            this.closeOtherDropdowns('gutterType');
+        },
+        
+        toggleBuildingConnectionTypeDropdown() {
+            this.isBuildingConnectionTypeDropdownOpen = !this.isBuildingConnectionTypeDropdownOpen;
+            this.closeOtherDropdowns('buildingConnectionType');
+        },
+        
+        toggleDistributionPanelLocationDropdown() {
+            this.isDistributionPanelLocationDropdownOpen = !this.isDistributionPanelLocationDropdownOpen;
+            this.closeOtherDropdowns('distributionPanelLocation');
+        },
+        
+        toggleVentilationTypeDropdown() {
+            this.isVentilationTypeDropdownOpen = !this.isVentilationTypeDropdownOpen;
+            this.closeOtherDropdowns('ventilationType');
+        },
+        
+        toggleGasDistributionTypeDropdown() {
+            this.isGasDistributionTypeDropdownOpen = !this.isGasDistributionTypeDropdownOpen;
+            this.closeOtherDropdowns('gasDistributionType');
+        },
+        
         closeOtherDropdowns(except) {
             if (except !== 'foundation') this.isFoundationDropdownOpen = false;
             if (except !== 'wall') this.isWallDropdownOpen = false;
@@ -1932,6 +2493,24 @@ const DefectForm = {
             if (except !== 'heatingInputMaterial') this.isHeatingInputMaterialDropdownOpen = false;
             if (except !== 'heatingMainMaterial') this.isHeatingMainMaterialDropdownOpen = false;
             if (except !== 'heatingRiserMaterial') this.isHeatingRiserMaterialDropdownOpen = false;
+            if (except !== 'coldWaterType') this.isColdWaterTypeDropdownOpen = false;
+            if (except !== 'coldWaterDistribution') this.isColdWaterDistributionDropdownOpen = false;
+            if (except !== 'coldWaterInputMaterial') this.isColdWaterInputMaterialDropdownOpen = false;
+            if (except !== 'coldWaterMainMaterial') this.isColdWaterMainMaterialDropdownOpen = false;
+            if (except !== 'coldWaterRiserMaterial') this.isColdWaterRiserMaterialDropdownOpen = false;
+            if (except !== 'hotWaterType') this.isHotWaterTypeDropdownOpen = false;
+            if (except !== 'hotWaterDistribution') this.isHotWaterDistributionDropdownOpen = false;
+            if (except !== 'hotWaterInputMaterial') this.isHotWaterInputMaterialDropdownOpen = false;
+            if (except !== 'hotWaterMainMaterial') this.isHotWaterMainMaterialDropdownOpen = false;
+            if (except !== 'hotWaterRiserMaterial') this.isHotWaterRiserMaterialDropdownOpen = false;
+            if (except !== 'fireWaterSupply') this.isFireWaterSupplyDropdownOpen = false;
+            if (except !== 'sewerageType') this.isSewerageTypeDropdownOpen = false;
+            if (except !== 'drainageType') this.isDrainageTypeDropdownOpen = false;
+            if (except !== 'gutterType') this.isGutterTypeDropdownOpen = false;
+            if (except !== 'buildingConnectionType') this.isBuildingConnectionTypeDropdownOpen = false;
+            if (except !== 'distributionPanelLocation') this.isDistributionPanelLocationDropdownOpen = false;
+            if (except !== 'ventilationType') this.isVentilationTypeDropdownOpen = false;
+            if (except !== 'gasDistributionType') this.isGasDistributionTypeDropdownOpen = false;
         },
         
         closeAllDropdowns() {
@@ -1955,6 +2534,24 @@ const DefectForm = {
             this.isHeatingInputMaterialDropdownOpen = false;
             this.isHeatingMainMaterialDropdownOpen = false;
             this.isHeatingRiserMaterialDropdownOpen = false;
+            this.isColdWaterTypeDropdownOpen = false;
+            this.isColdWaterDistributionDropdownOpen = false;
+            this.isColdWaterInputMaterialDropdownOpen = false;
+            this.isColdWaterMainMaterialDropdownOpen = false;
+            this.isColdWaterRiserMaterialDropdownOpen = false;
+            this.isHotWaterTypeDropdownOpen = false;
+            this.isHotWaterDistributionDropdownOpen = false;
+            this.isHotWaterInputMaterialDropdownOpen = false;
+            this.isHotWaterMainMaterialDropdownOpen = false;
+            this.isHotWaterRiserMaterialDropdownOpen = false;
+            this.isFireWaterSupplyDropdownOpen = false;
+            this.isSewerageTypeDropdownOpen = false;
+            this.isDrainageTypeDropdownOpen = false;
+            this.isGutterTypeDropdownOpen = false;
+            this.isBuildingConnectionTypeDropdownOpen = false;
+            this.isDistributionPanelLocationDropdownOpen = false;
+            this.isVentilationTypeDropdownOpen = false;
+            this.isGasDistributionTypeDropdownOpen = false;
         },
         
         handleFileUpload(event) {
@@ -2046,38 +2643,38 @@ const DefectForm = {
                 formDataToSend.append('heatingRiserMaterial', JSON.stringify(this.formData.heatingRiserMaterial));
                 formDataToSend.append('heatingRiserDiameter', this.formData.heatingRiserDiameter);
                 formDataToSend.append('heatingCharacteristics', this.formData.heatingCharacteristics);
-                formDataToSend.append('coldWaterType', this.formData.coldWaterType);
-                formDataToSend.append('coldWaterDistribution', this.formData.coldWaterDistribution);
-                formDataToSend.append('coldWaterInputMaterial', this.formData.coldWaterInputMaterial);
+                formDataToSend.append('coldWaterType', JSON.stringify(this.formData.coldWaterType));
+                formDataToSend.append('coldWaterDistribution', JSON.stringify(this.formData.coldWaterDistribution));
+                formDataToSend.append('coldWaterInputMaterial', JSON.stringify(this.formData.coldWaterInputMaterial));
                 formDataToSend.append('coldWaterInputDiameter', this.formData.coldWaterInputDiameter);
-                formDataToSend.append('coldWaterMainMaterial', this.formData.coldWaterMainMaterial);
+                formDataToSend.append('coldWaterMainMaterial', JSON.stringify(this.formData.coldWaterMainMaterial));
                 formDataToSend.append('coldWaterMainDiameter', this.formData.coldWaterMainDiameter);
-                formDataToSend.append('coldWaterRiserMaterial', this.formData.coldWaterRiserMaterial);
+                formDataToSend.append('coldWaterRiserMaterial', JSON.stringify(this.formData.coldWaterRiserMaterial));
                 formDataToSend.append('coldWaterRiserDiameter', this.formData.coldWaterRiserDiameter);
-                formDataToSend.append('hotWaterType', this.formData.hotWaterType);
-                formDataToSend.append('hotWaterDistribution', this.formData.hotWaterDistribution);
-                formDataToSend.append('hotWaterInputMaterial', this.formData.hotWaterInputMaterial);
+                formDataToSend.append('hotWaterType', JSON.stringify(this.formData.hotWaterType));
+                formDataToSend.append('hotWaterDistribution', JSON.stringify(this.formData.hotWaterDistribution));
+                formDataToSend.append('hotWaterInputMaterial', JSON.stringify(this.formData.hotWaterInputMaterial));
                 formDataToSend.append('hotWaterInputDiameter', this.formData.hotWaterInputDiameter);
-                formDataToSend.append('hotWaterMainMaterial', this.formData.hotWaterMainMaterial);
+                formDataToSend.append('hotWaterMainMaterial', JSON.stringify(this.formData.hotWaterMainMaterial));
                 formDataToSend.append('hotWaterMainDiameter', this.formData.hotWaterMainDiameter);
-                formDataToSend.append('hotWaterRiserMaterial', this.formData.hotWaterRiserMaterial);
+                formDataToSend.append('hotWaterRiserMaterial', JSON.stringify(this.formData.hotWaterRiserMaterial));
                 formDataToSend.append('hotWaterRiserDiameter', this.formData.hotWaterRiserDiameter);
-                formDataToSend.append('fireWaterSupply', this.formData.fireWaterSupply);
+                formDataToSend.append('fireWaterSupply', JSON.stringify(this.formData.fireWaterSupply));
                 formDataToSend.append('waterDrainMaterial', this.formData.waterDrainMaterial);
                 formDataToSend.append('waterDrainDiameter', this.formData.waterDrainDiameter);
-                formDataToSend.append('sewerageType', this.formData.sewerageType);
+                formDataToSend.append('sewerageType', JSON.stringify(this.formData.sewerageType));
                 formDataToSend.append('sewerageRiserMaterial', this.formData.sewerageRiserMaterial);
                 formDataToSend.append('sewerageRiserDiameter', this.formData.sewerageRiserDiameter);
                 formDataToSend.append('sewerageOutputDiameter', this.formData.sewerageOutputDiameter);
                 formDataToSend.append('seweragePipeDiameter', this.formData.seweragePipeDiameter);
-                formDataToSend.append('drainageType', this.formData.drainageType);
-                formDataToSend.append('gutterType', this.formData.gutterType);
+                formDataToSend.append('drainageType', JSON.stringify(this.formData.drainageType));
+                formDataToSend.append('gutterType', JSON.stringify(this.formData.gutterType));
                 formDataToSend.append('drainagePipeMaterial', this.formData.drainagePipeMaterial);
                 formDataToSend.append('vruLocation', this.formData.vruLocation);
-                formDataToSend.append('buildingConnectionType', this.formData.buildingConnectionType);
-                formDataToSend.append('distributionPanelLocation', this.formData.distributionPanelLocation);
-                formDataToSend.append('ventilationType', this.formData.ventilationType);
-                formDataToSend.append('gasDistributionType', this.formData.gasDistributionType);
+                formDataToSend.append('buildingConnectionType', JSON.stringify(this.formData.buildingConnectionType));
+                formDataToSend.append('distributionPanelLocation', JSON.stringify(this.formData.distributionPanelLocation));
+                formDataToSend.append('ventilationType', JSON.stringify(this.formData.ventilationType));
+                formDataToSend.append('gasDistributionType', JSON.stringify(this.formData.gasDistributionType));
                 formDataToSend.append('electricalSystems', this.formData.electricalSystems);
                 formDataToSend.append('submittedAt', new Date().toISOString());
                 
@@ -2182,48 +2779,48 @@ const DefectForm = {
                 heatingCharacteristics: '',
                 
                 // ХВС
-                coldWaterType: '',
-                coldWaterDistribution: '',
-                coldWaterInputMaterial: '',
+                coldWaterType: [],
+                coldWaterDistribution: [],
+                coldWaterInputMaterial: [],
                 coldWaterInputDiameter: '',
-                coldWaterMainMaterial: '',
+                coldWaterMainMaterial: [],
                 coldWaterMainDiameter: '',
-                coldWaterRiserMaterial: '',
+                coldWaterRiserMaterial: [],
                 coldWaterRiserDiameter: '',
                 
                 // ГВС
-                hotWaterType: '',
-                hotWaterDistribution: '',
-                hotWaterInputMaterial: '',
+                hotWaterType: [],
+                hotWaterDistribution: [],
+                hotWaterInputMaterial: [],
                 hotWaterInputDiameter: '',
-                hotWaterMainMaterial: '',
+                hotWaterMainMaterial: [],
                 hotWaterMainDiameter: '',
-                hotWaterRiserMaterial: '',
+                hotWaterRiserMaterial: [],
                 hotWaterRiserDiameter: '',
-                fireWaterSupply: '',
+                fireWaterSupply: [],
                 waterDrainMaterial: '',
                 waterDrainDiameter: '',
                 
                 // Канализация
-                sewerageType: '',
+                sewerageType: [],
                 sewerageRiserMaterial: '',
                 sewerageRiserDiameter: '',
                 sewerageOutputDiameter: '',
                 seweragePipeDiameter: '',
                 
                 // Водоотведение
-                drainageType: '',
-                gutterType: '',
+                drainageType: [],
+                gutterType: [],
                 drainagePipeMaterial: '',
                 vruLocation: '',
                 buildingConnectionType: '',
                 distributionPanelLocation: '',
                 
                 // Вентиляция
-                ventilationType: '',
+                ventilationType: [],
                 
                 // Газоснабжение
-                gasDistributionType: '',
+                gasDistributionType: [],
                 
                 // ЭОМ
                 electricalSystems: '',
