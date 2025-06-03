@@ -50,6 +50,38 @@ body {
     margin-bottom: 30px;
 }
 
+.section-header {
+    margin: 40px 0 25px 0;
+}
+
+.section-title {
+    background: linear-gradient(135deg, rgb(2, 177, 192), rgb(68, 73, 98));
+    color: white;
+    padding: 15px 20px;
+    margin: 0;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.subsection-header {
+    margin: 30px 0 20px 0;
+}
+
+.subsection-title {
+    background: linear-gradient(135deg, rgba(2, 177, 192, 0.8), rgba(68, 73, 98, 0.8));
+    color: white;
+    padding: 12px 18px;
+    margin: 0;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
 .form-group {
     margin-bottom: 25px;
 }

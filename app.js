@@ -11,6 +11,16 @@ const DefectForm = {
                 <h1 class="form-title">Форма регистрации дефектов</h1>
                 
                 <form @submit.prevent="submitForm">
+                    <!-- Конструктив -->
+                    <div class="section-header">
+                        <h2 class="section-title">Конструктив</h2>
+                    </div>
+                    
+                    <!-- Фундамент -->
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">Фундамент</h3>
+                    </div>
+                    
                     <div class="form-group">
                         <label class="form-label">Тип фундамента (тзк) *</label>
                         <div class="custom-select-container" @click.stop>
@@ -41,6 +51,22 @@ const DefectForm = {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="foundationCondition">Состояние фундамента</label>
+                        <input 
+                            type="text" 
+                            id="foundationCondition"
+                            v-model="formData.foundationCondition"
+                            class="form-input"
+                            placeholder="Укажите состояние фундамента"
+                        >
+                    </div>
+                    
+                    <!-- Стены -->
+                    <div class="subsection-header">
+                        <h3 class="subsection-title">Стены</h3>
                     </div>
                     
                     <div class="form-group">
@@ -76,6 +102,17 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
+                        <label class="form-label" for="wallThickness">Толщина стен (см)</label>
+                        <input 
+                            type="text" 
+                            id="wallThickness"
+                            v-model="formData.wallThickness"
+                            class="form-input"
+                            placeholder="Укажите толщину стен"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
                         <label class="form-label">Материал стен наружных *</label>
                         <div class="custom-select-container" @click.stop>
                             <div class="custom-select" @click="toggleExternalWallMaterialDropdown">
@@ -105,6 +142,17 @@ const DefectForm = {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="wallInsulation">Утепление стен</label>
+                        <input 
+                            type="text" 
+                            id="wallInsulation"
+                            v-model="formData.wallInsulation"
+                            class="form-input"
+                            placeholder="Укажите тип утепления"
+                        >
                     </div>
                     
                     <div class="form-group">
@@ -140,6 +188,17 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
+                        <label class="form-label" for="wallFinish">Отделка стен</label>
+                        <input 
+                            type="text" 
+                            id="wallFinish"
+                            v-model="formData.wallFinish"
+                            class="form-input"
+                            placeholder="Укажите тип отделки"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
                         <label class="form-label">Материал перегородок *</label>
                         <div class="custom-select-container" @click.stop>
                             <div class="custom-select" @click="togglePartitionMaterialDropdown">
@@ -169,6 +228,17 @@ const DefectForm = {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="wallStrength">Прочность стеновых конструкций</label>
+                        <input 
+                            type="text" 
+                            id="wallStrength"
+                            v-model="formData.wallStrength"
+                            class="form-input"
+                            placeholder="Укажите прочность стеновых конструкций"
+                        >
                     </div>
                     
                     <div class="form-group">
@@ -236,10 +306,15 @@ const DefectForm = {
         return {
             formData: {
                 foundationType: [],
+                foundationCondition: '',
                 wallType: [],
+                wallThickness: '',
                 externalWallMaterial: [],
+                wallInsulation: '',
                 internalWallMaterial: [],
+                wallFinish: '',
                 partitionMaterial: [],
+                wallStrength: '',
                 photos: []
             },
             
@@ -400,10 +475,15 @@ const DefectForm = {
                 const formDataToSend = new FormData();
                 
                 formDataToSend.append('foundationType', JSON.stringify(this.formData.foundationType));
+                formDataToSend.append('foundationCondition', this.formData.foundationCondition);
                 formDataToSend.append('wallType', JSON.stringify(this.formData.wallType));
+                formDataToSend.append('wallThickness', this.formData.wallThickness);
                 formDataToSend.append('externalWallMaterial', JSON.stringify(this.formData.externalWallMaterial));
+                formDataToSend.append('wallInsulation', this.formData.wallInsulation);
                 formDataToSend.append('internalWallMaterial', JSON.stringify(this.formData.internalWallMaterial));
+                formDataToSend.append('wallFinish', this.formData.wallFinish);
                 formDataToSend.append('partitionMaterial', JSON.stringify(this.formData.partitionMaterial));
+                formDataToSend.append('wallStrength', this.formData.wallStrength);
                 formDataToSend.append('submittedAt', new Date().toISOString());
                 
                 this.formData.photos.forEach((photo, index) => {
@@ -437,10 +517,15 @@ const DefectForm = {
         resetForm() {
             this.formData = {
                 foundationType: [],
+                foundationCondition: '',
                 wallType: [],
+                wallThickness: '',
                 externalWallMaterial: [],
+                wallInsulation: '',
                 internalWallMaterial: [],
+                wallFinish: '',
                 partitionMaterial: [],
+                wallStrength: '',
                 photos: []
             };
             this.photosPreviews = [];
