@@ -651,8 +651,8 @@ const DefectForm = {
                     </div>
                     
                     <!-- МОП -->
-                    <div class="subsection-header">
-                        <h3 class="subsection-title">МОП</h3>
+                    <div class="section-header">
+                        <h2 class="section-title">МОП</h2>
                     </div>
                     
                     <!-- Лестницы -->
