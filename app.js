@@ -54,13 +54,13 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="foundationCondition">Состояние фундамента</label>
+                        <label class="form-label" for="foundationCondition">Характеристики фундамента</label>
                         <input 
                             type="text" 
                             id="foundationCondition"
                             v-model="formData.foundationCondition"
                             class="form-input"
-                            placeholder="Укажите состояние фундамента"
+                            placeholder="Укажите характеристики фундамента"
                         >
                     </div>
                     
@@ -102,13 +102,13 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="wallThickness">Толщина стен (см)</label>
+                        <label class="form-label" for="wallThickness">Толщина наружных стен (мм)</label>
                         <input 
                             type="text" 
                             id="wallThickness"
                             v-model="formData.wallThickness"
                             class="form-input"
-                            placeholder="Укажите толщину стен"
+                            placeholder="Укажите толщину наружных стен"
                         >
                     </div>
                     
@@ -145,13 +145,13 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="wallInsulation">Утепление стен</label>
+                        <label class="form-label" for="wallInsulation">Толщина внутренних стен</label>
                         <input 
                             type="text" 
                             id="wallInsulation"
                             v-model="formData.wallInsulation"
                             class="form-input"
-                            placeholder="Укажите тип утепления"
+                            placeholder="Укажите толщину внутренних стен"
                         >
                     </div>
                     
@@ -1720,7 +1720,7 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="buildingConnectionType">Тип подключения здания (зом)</label>
+                        <label class="form-label" for="buildingConnectionType">Тип подключения здания (эом)</label>
                         <div class="custom-select-container" @click.stop>
                             <div class="custom-select" @click="toggleBuildingConnectionTypeDropdown">
                                 <div class="select-display">
@@ -1752,7 +1752,7 @@ const DefectForm = {
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Расположение щитов распределительных (зом)</label>
+                        <label class="form-label">Расположение щитов распределительных (эом)</label>
                         <div class="custom-select-container" @click.stop>
                             <div class="custom-select" @click="toggleDistributionPanelLocationDropdown">
                                 <div class="select-display">
@@ -2336,7 +2336,7 @@ const DefectForm = {
                 'Нет подходящего описания',
                 'Отсутствует',
                 'по фасаду',
-                'по подвалу'
+                'по подъезду'
             ],
             
             isVerified: false,
